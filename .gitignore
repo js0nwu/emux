@@ -64,6 +64,8 @@ target/
 *.png
 
 train/
+test/
+output/
 
 # emacs
 *#
