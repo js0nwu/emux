@@ -55,3 +55,16 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# testing data
+*.mp4
+*.mp3
+*.wav
+*.jpg
+*.png
+
+train/
+
+# emacs
+*#
+*~
