@@ -4,6 +4,8 @@ import soundutil
 import numpy
 import cv2
 
+MIN_MATCHES = 10
+
 FLANN_INDEX_KDTREE = 1
 
 SPEC_MAX = 20
@@ -30,8 +32,19 @@ class SignalFinder(object):
     def find_signal(self, r, s):
         if self.fingers is None:
             self.train_fingers()
-        pattern = SignalFinder.get_finger(r, s)
-        return (0, 0)
+        query = SignalFinder.get_finger(r, s)
+        matches = signal_matcher.knnMatch(query[1], self.fingers[1], k = 2)
+        good = []
+        for m, n in matches:
+            if m.distance < 0.7 * n.distance:
+                good.append(m)
+        if len(good) > MIN_MATCHES:
+            src_pts = numpy.float32([query[0][m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
+            dst_pts = numpy.float32([self.fingers[0][m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
+            M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+            
+        else:
+            return (0, 0)
 
 
 def sync_signals(r1, s1, r2, s2, n):
