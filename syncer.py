@@ -12,13 +12,15 @@ SPEC_MAX = 20
 SPEC_MIN = -36
 
 signal_detector = cv2.xfeatures2d.SIFT_create()
-signal_matcher = cv2.FlannBasedMatcher(dict(algorithm = FLANN_INDEX_KDTREE, trees = 4), {})
+signal_matcher = cv2.FlannBasedMatcher(dict(algorithm=FLANN_INDEX_KDTREE, trees=4), {})
+
 
 class SignalFinder(object):
     def __init__(self, r, s):
         self.r = r
         self.s = s
         self.fingers = None
+
     @staticmethod
     def get_finger(r, s):
         spec = numpy.clip(numpy.log(signal.spectrogram(s, fs=r)[2]), SPEC_MIN, SPEC_MAX)
@@ -26,23 +28,29 @@ class SignalFinder(object):
         spec /= (SPEC_MAX - SPEC_MIN)
         spec *= 255
         spec = spec.astype(dtype=numpy.uint8)
-        return signal_detector.detectAndCompute(spec, None)
+        return (signal_detector.detectAndCompute(spec, None), spec.shape)
+
     def train_fingers(self):
         self.fingers = SignalFinder.get_finger(self.r, self.s)
+
     def find_signal(self, r, s):
         if self.fingers is None:
             self.train_fingers()
         query = SignalFinder.get_finger(r, s)
-        matches = signal_matcher.knnMatch(query[1], self.fingers[1], k = 2)
+        matches = signal_matcher.knnMatch(query[1], self.fingers[1], k=2)
         good = []
         for m, n in matches:
             if m.distance < 0.7 * n.distance:
                 good.append(m)
         if len(good) > MIN_MATCHES:
-            src_pts = numpy.float32([query[0][m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
-            dst_pts = numpy.float32([self.fingers[0][m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
+            src_pts = numpy.float32([query[0][0][m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
+            dst_pts = numpy.float32([self.fingers[0][0][m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
             M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
-            
+            h, w = query[1]
+            pts = numpy.float32([[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]).reshape(-1, 1, 2)
+            dst = cv2.perspectiveTransform(pts, M)
+            dst_sort = sorted(dst, key = lambda x : x[0])
+            return (dst_sort[0][0], dst_sort[-1][0] - dst_sort[0][0])
         else:
             return (0, 0)
 
