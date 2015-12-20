@@ -1,10 +1,12 @@
 import scipy.signal as signal
 import soundutil
 
+import scipy.io.wavfile as wav
+
 import numpy
 import cv2
 
-MIN_MATCHES = 10
+MIN_MATCHES = 4
 
 FLANN_INDEX_KDTREE = 1
 
@@ -40,16 +42,17 @@ class SignalFinder(object):
         matches = signal_matcher.knnMatch(query[0][1], self.fingers[0][1], k=2)
         good = []
         for m, n in matches:
-            if m.distance < 0.7 * n.distance:
+            if m.distance < 0.9 * n.distance:
                 good.append(m)
-        if len(good) > MIN_MATCHES:
+        print(len(good))
+        if len(good) >= MIN_MATCHES:
             src_pts = numpy.float32([query[0][0][m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
             dst_pts = numpy.float32([self.fingers[0][0][m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
             M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
             h, w = query[1]
             pts = numpy.float32([[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]).reshape(-1, 1, 2)
             dst = cv2.perspectiveTransform(pts, M)
-            dst_sort = sorted(dst, key = lambda x : x[0])
+            dst_sort = dst[dst[:,0].argsort()]
             return (dst_sort[0][0], dst_sort[-1][0] - dst_sort[0][0])
         else:
             return (0, 0)
@@ -60,3 +63,10 @@ def sync_signals(r1, s1, r2, s2, n):
     b_duration = s2.size // r2
     step_duration = a_duration / n
     steps = soundutil.sound_split_frames(s1, step_duration, r1)
+
+r1, s1 = wav.read('angry.wav')
+r2, s2 = wav.read('sad.wav')
+s1 = s1[:23000]
+sm = SignalFinder(r2, s2)
+sm.train_fingers()
+print(sm.find_signal(r1, s1))
