@@ -37,7 +37,7 @@ class SignalFinder(object):
         if self.fingers is None:
             self.train_fingers()
         query = SignalFinder.get_finger(r, s)
-        matches = signal_matcher.knnMatch(query[1], self.fingers[1], k=2)
+        matches = signal_matcher.knnMatch(query[0][1], self.fingers[0][1], k=2)
         good = []
         for m, n in matches:
             if m.distance < 0.7 * n.distance:
