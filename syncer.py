@@ -53,6 +53,7 @@ class SignalFinder(object):
             pts = numpy.float32([[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]).reshape(-1, 1, 2)
             dst = cv2.perspectiveTransform(pts, M)
             dst_sort = dst[dst[:,0].argsort()]
+            print(dst_sort)
             return (dst_sort[0][0], dst_sort[-1][0] - dst_sort[0][0])
         else:
             return (0, 0)
@@ -66,7 +67,7 @@ def sync_signals(r1, s1, r2, s2, n):
 
 r1, s1 = wav.read('angry.wav')
 r2, s2 = wav.read('sad.wav')
-s1 = s1[:23000]
+s1 = s1[15000:23000]
 sm = SignalFinder(r2, s2)
 sm.train_fingers()
 print(sm.find_signal(r1, s1))
