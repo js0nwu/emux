@@ -226,7 +226,7 @@ def color_correct(a, b, la):
     return numpy.clip((b.astype(numpy.float64) * a_blur.astype(numpy.float64) / b_blur.astype(numpy.float64)), 0, 255)
 
 
-def face_swap(mat_picture, mat_replace):
+def face_swap(mat_picture, mat_replace, poisson = False):
     p_gray = cv2.cvtColor(mat_picture, cv2.COLOR_BGR2GRAY)
     r_gray = cv2.cvtColor(mat_replace, cv2.COLOR_BGR2GRAY)
     f_faces = find_faces(p_gray, HOG_DETECT)
