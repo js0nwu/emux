@@ -157,6 +157,7 @@ def procrustes(p1, p2):
     s2 = numpy.std(p2)
     p1 /= s1
     p2 /= s2
+    # this looks complicated - do better with solving derivative of angle function and applying w/ rotation matrix?
     U, S, Vt = numpy.linalg.svd(p1.T * p2)
     R = (U * Vt).T
     return numpy.vstack([numpy.hstack(((s2 / s1) * R, c2.T - (s2 / s1) * R * c1.T)), numpy.matrix([0., 0., 1])])
