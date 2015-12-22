@@ -93,16 +93,14 @@ def sync_clips(a, b, t):
         a_r = a_clip.audio.fps
         ati, atd = sm.find_signal(a_r, a_audio)
         b_match = None
-        if ati == 0 and atd == 0:
+        if atd == 0:
             b_match = a_clip
         else:
             b_match = b.subclip(ati, ati + atd).speedx(atd / clip_length)
         clips.append(b_match)
         clip_start += clip_length
         time -= clip_length
-    print(clips)
     synced = concatenate(clips)
-    print(synced.duration)
     return synced
 # r1, s1 = wav.read('angry.wav')
 # r2, s2 = wav.read('sad.wav')
@@ -115,4 +113,4 @@ def sync_clips(a, b, t):
 angry = VideoFileClip('angry.mp4')
 sad = VideoFileClip('sad.mp4')
 sad_sync = sync_clips(angry, sad, 1)
-# sad_sync.without_audio().write_videofile('sadsync.mp4')
+sad_sync.set_audio(angry.audio).write_videofile('sadsync.mp4')
