@@ -1,14 +1,16 @@
 import scipy.signal as signal
 
-import scipy.io.wavfile as wav
-
 import numpy
 import cv2
 
-import soundutil
+from audiofiles import utility
 
-FIT_THRESHOLD = 1.0
+from moviepy.editor import *
+import moviepy.editor as mp
 
+FIT_THRESHOLD = 5.0
+
+MIN_MATCH_NUM = 4
 MAX_MATCH_NUM = 4
 
 SPEC_MAX = 20
@@ -58,6 +60,8 @@ class SignalFinder(object):
         des2 = self.fingers[2][1]
         matches = matcher.match(des1, des2)
         matches = sorted(matches, key=lambda x: x.distance)[:MAX_MATCH_NUM]
+        if len(matches) < MIN_MATCH_NUM:
+            return (0, 0) # use actual exceptions
         src_pts = numpy.float32([kp1[m.queryIdx].pt for m in matches]).reshape(-1, 1, 2)
         dst_pts = numpy.float32([kp2[m.trainIdx].pt for m in matches]).reshape(-1, 1, 2)
         M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, FIT_THRESHOLD)
@@ -72,19 +76,43 @@ class SignalFinder(object):
         timelength = t2[tf] - t2[ti]
         return (timestart, timelength)
 
+def stereo_to_mono(s):
+    return utility.float2pcm(numpy.mean(s, axis = 1))
 
-def sync_signals(r1, s1, r2, s2, n):
-    a_duration = s1.size // r1
-    b_duration = s2.size // r2
-    step_duration = a_duration / n
-    steps = soundutil.sound_split_frames(s1, step_duration, r1)
+def sync_clips(a, b, t):
+    b_audio = stereo_to_mono(b.audio.to_soundarray())
+    b_r = b.audio.fps
+    sm = SignalFinder(b_r, b_audio)
+    sm.train_fingers()
+    time = a.duration
+    clips = []
+    clip_start = 0
+    while time > 0:
+        clip_length = min(time, t)
+        a_clip = a.subclip(clip_start, clip_start + clip_length)
+        a_audio = stereo_to_mono(a_clip.audio.to_soundarray())
+        a_r = a_clip.audio.fps
+        ati, atd = sm.find_signal(a_r, a_audio)
+        bmatch = None
+        if ati == 0 and atd == 0:
+            b_match = a_clip
+        else:
+            b_match = b.subclip(ati, ati + atd).speedx(atd / clip_length)
+        clips.append(b_match)
+        clip_start += clip_length
+        time -= clip_length
 
-
-r1, s1 = wav.read('angry.wav')
-r2, s2 = wav.read('sad.wav')
-s1 = s1[:23000]
-cv2.imwrite('1.jpg', SignalFinder.generate_spectrogram(r1, s1)[2])
-cv2.imwrite('2.jpg', SignalFinder.generate_spectrogram(r2, s2)[2])
-sm = SignalFinder(r2, s2)
-sm.train_fingers()
-print(sm.find_signal(r1, s1))
+    synced = mp.concatenate(clips)
+    return synced
+# r1, s1 = wav.read('angry.wav')
+# r2, s2 = wav.read('sad.wav')
+# s1 = s1[:23000]
+# cv2.imwrite('1.jpg', SignalFinder.generate_spectrogram(r1, s1)[2])
+# cv2.imwrite('2.jpg', SignalFinder.generate_spectrogram(r2, s2)[2])
+# sm = SignalFinder(r2, s2)
+# sm.train_fingers()
+# print(sm.find_signal(r1, s1))
+angry = VideoFileClip('angry.mp4')
+sad = VideoFileClip('sad.mp4')
+sad_sync = sync_clips(angry, sad, 1)
+sad_sync.without_audio().write_videofile('sadsync.mp4')
