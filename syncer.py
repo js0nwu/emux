@@ -6,7 +6,6 @@ import cv2
 from audiofiles import utility
 
 from moviepy.editor import *
-import moviepy.editor as mp
 
 FIT_THRESHOLD = 5.0
 
@@ -93,7 +92,7 @@ def sync_clips(a, b, t):
         a_audio = stereo_to_mono(a_clip.audio.to_soundarray())
         a_r = a_clip.audio.fps
         ati, atd = sm.find_signal(a_r, a_audio)
-        bmatch = None
+        b_match = None
         if ati == 0 and atd == 0:
             b_match = a_clip
         else:
@@ -101,8 +100,7 @@ def sync_clips(a, b, t):
         clips.append(b_match)
         clip_start += clip_length
         time -= clip_length
-
-    synced = mp.concatenate(clips)
+    synced = concatenate(clips)
     return synced
 # r1, s1 = wav.read('angry.wav')
 # r2, s2 = wav.read('sad.wav')
