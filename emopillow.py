@@ -1,7 +1,7 @@
 import blender
 import cv2
 
-# import syncer
+import syncer
 
 PICTURE_PATH = 'picture.jpg'
 REPLACE_PATH = 'replace.jpg'
