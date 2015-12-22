@@ -39,8 +39,8 @@
       <file leaf-file-name="syncer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/syncer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8159688">
-              <caret line="114" column="35" selection-start-line="114" selection-start-column="35" selection-end-line="114" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.23661149">
+              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -427,7 +427,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450773843309</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="play around with step increment">
+      <created>1450774001552</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1450774001552</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -499,7 +505,8 @@
     <MESSAGE value="fix some things" />
     <MESSAGE value="why is duration nan" />
     <MESSAGE value="sort of works now - replacing zero duration matches with original" />
-    <option name="LAST_COMMIT_MESSAGE" value="sort of works now - replacing zero duration matches with original" />
+    <MESSAGE value="play around with step increment" />
+    <option name="LAST_COMMIT_MESSAGE" value="play around with step increment" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -889,8 +896,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/syncer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8159688">
-          <caret line="114" column="35" selection-start-line="114" selection-start-column="35" selection-end-line="114" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.23661149">
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>

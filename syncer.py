@@ -7,7 +7,7 @@ from audiofiles import utility
 
 from moviepy.editor import *
 
-FIT_THRESHOLD = 5.0
+FIT_THRESHOLD = 7.0
 
 MIN_MATCH_NUM = 4
 MAX_MATCH_NUM = 4
@@ -112,5 +112,5 @@ def sync_clips(a, b, t):
 # print(sm.find_signal(r1, s1))
 angry = VideoFileClip('angry.mp4')
 sad = VideoFileClip('sad.mp4')
-sad_sync = sync_clips(angry, sad, 2)
+sad_sync = sync_clips(angry, sad, 1)
 sad_sync.set_audio(angry.audio).write_videofile('sadsync.mp4')
