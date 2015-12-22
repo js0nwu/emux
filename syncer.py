@@ -9,14 +9,13 @@ import soundutil
 
 FIT_THRESHOLD = 1.0
 
-MAX_MATCH_NUM = 10
+MAX_MATCH_NUM = 4
 
 SPEC_MAX = 20
 SPEC_MIN = -36
 
 detector = cv2.ORB_create()
 matcher = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-
 
 class SignalFinder(object):
     def __init__(self, r, s):
@@ -66,9 +65,11 @@ class SignalFinder(object):
         w = t1.size
         pts = numpy.float32([[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]).reshape(-1, 1, 2)
         dst = cv2.perspectiveTransform(pts, M)
-        times = [d[0][0] for d in dst].sort()
-        timestart = times[0]
-        timelength = times[-1] - times[0]
+        times = numpy.clip(sorted([d[0][0] for d in dst]), 0, t2.size - 1)
+        ti = int(times[0])
+        tf = int(times[-1])
+        timestart = t2[ti]
+        timelength = t2[tf] - t2[ti]
         return (timestart, timelength)
 
 
@@ -81,9 +82,9 @@ def sync_signals(r1, s1, r2, s2, n):
 
 r1, s1 = wav.read('angry.wav')
 r2, s2 = wav.read('sad.wav')
+s1 = s1[:23000]
 cv2.imwrite('1.jpg', SignalFinder.generate_spectrogram(r1, s1)[2])
 cv2.imwrite('2.jpg', SignalFinder.generate_spectrogram(r2, s2)[2])
-s1 = s1[15000:23000]
 sm = SignalFinder(r2, s2)
 sm.train_fingers()
 print(sm.find_signal(r1, s1))
