@@ -226,6 +226,21 @@ def color_correct(a, b, la):
 
     return numpy.clip((b.astype(numpy.float64) * a_blur.astype(numpy.float64) / b_blur.astype(numpy.float64)), 0, 255)
 
+def face_distance(mat_picture, mat_replace):
+    p_gray = cv2.cvtColor(mat_picture, cv2.COLOR_BGR2GRAY)
+    r_gray = cv2.cvtColor(mat_replace, cv2.COLOR_BGR2GRAY)
+    f_faces = find_faces(p_gray, HOG_DETECT)
+    f = f_faces[0]
+    f_landmarks = get_landmarks(mat_picture, f, face_predictor)
+    r_faces = find_faces(r_gray, HOG_DETECT)
+    r = r_faces[0]
+    r_landmarks = get_landmarks(mat_replace, r, face_predictor)
+    transform = procrustes(f_landmarks, r_landmarks)
+    f3 = numpy.asarray([l + [1] for l in f_landmarks])
+    r3 = numpy.asarray([l + [1] for l in r_landmarks])
+    f3 = cv2.transform(f3, numpy.identity(3))
+    dst_land = cv2.transform(r3, transform)
+    return numpy.sum([numpy.square(dst_land[i] - f3[i]) for i in range(len(dst_land))])
 
 def face_swap(mat_picture, mat_replace, poisson = False):
     p_gray = cv2.cvtColor(mat_picture, cv2.COLOR_BGR2GRAY)
