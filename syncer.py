@@ -91,7 +91,7 @@ def sync_clips(a, b):
         cost = get_cost(FRAME_LENGTH, ew, a, b, a_r, a_audio, b_r, b_audio)
         pq.put((cost, FRAME_LENGTH, ew, [ew]))
     visited = []
-    paths = []
+    paths = queue.PriorityQueue()
     minpath = None
     while pq.empty() == False:
         sc, sa, sb, sp = pq.get()
@@ -99,6 +99,8 @@ def sync_clips(a, b):
         if minpath is not None and sc >= minpath:
             continue
         key = (sa, sb)
+        print(key)
+        print(visited)
         if key in visited:
             continue
         # pruning heuristic for min time left on sa and visited?
@@ -110,22 +112,21 @@ def sync_clips(a, b):
                 ncost = sc + get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
                 pq.put((ncost, nat, nbt, sp + [nw]))
             elif nat >= a.duration:
-                paths.append((sc, sp))
+                ncost = sc + get_cost(a.duration, min(nbt, b.duration), a, b, a_r, a_audio, b_r, b_audio)
+                paths.put((ncost, sp + [nw]))
                 if minpath is None or sc < minpath:
                     minpath = sc
         visited.append(key)
 
     print(paths)
     print(minpath)
-    scost, spath = paths[0]
+    scost, spath = paths.get()
     clips = []
     cstart = 0
     for seg in spath:
         clips.append(b.subclip(cstart, cstart+ seg).speedx(seg / FRAME_LENGTH))
         cstart += seg
 
-    remainder = b.subclip(cstart, b.duration).speedx((b.duration - cstart) / (a.duration % FRAME_LENGTH))
-    clips.append(remainder)
     return concatenate(clips)
 
 a = VideoFileClip("angry.mp4")
