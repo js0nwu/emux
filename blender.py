@@ -230,9 +230,13 @@ def face_distance(mat_picture, mat_replace):
     p_gray = cv2.cvtColor(mat_picture, cv2.COLOR_BGR2GRAY)
     r_gray = cv2.cvtColor(mat_replace, cv2.COLOR_BGR2GRAY)
     f_faces = find_faces(p_gray, HOG_DETECT)
+    if len(f_faces) == 0:
+        return 0
     f = f_faces[0]
     f_landmarks = get_landmarks(mat_picture, f, face_predictor)
     r_faces = find_faces(r_gray, HOG_DETECT)
+    if len(r_faces) == 0:
+        return 0
     r = r_faces[0]
     r_landmarks = get_landmarks(mat_replace, r, face_predictor)
     transform = procrustes(f_landmarks, r_landmarks)

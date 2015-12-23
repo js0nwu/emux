@@ -11,9 +11,12 @@ from moviepy.editor import *
 
 import blender
 
+import queue
+
 PATH_STEPS = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]
 
-FRAME_LENGTH = 0.5
+FRAME_LENGTH = 0.1
+
 
 def mel(hertz):
     return 1125 * numpy.log(1 + hertz/ 700)
@@ -64,20 +67,46 @@ def extract_frame(r, s, t, l =FRAME_LENGTH):
 def cost1(t1, t2, av, bv):
     return blender.face_distance(av.get_frame(t1), bv.get_frame(t2))
 
-def cost2(t1, t2, aa, ba):
-    return mfcc_distance(stereo_to_mono(aa.get_frame(t1)), stereo_to_mono(ba.get_frame(t2)))
+def cost2(t1, t2, ar, aa, br, ba):
+    af = extract_frame(ar, aa, t1)
+    bf = extract_frame(br, ba, t2)
+    return mfcc_distance(ar, af, br, bf)
 
-def get_cost(t1, t2, av, bv, aa, ba):
-    return cost1(t1, t2, av, bv) + cost2(t1, t2, aa, ba)
-
-def remainder(ta, tb, tastep):
-    return 0
+def get_cost(t1, t2, av, bv, ar, aa, br, ba):
+    return cost1(t1, t2, av, bv) + cost2(t1, t2, ar, aa, br, ba)
 
 def stereo_to_mono(s):
-    return utility.float2pcm(numpy.mean(s, axis = 1))
+    return utility.float2pcm(numpy.mean(s, axis=1))
 
 def sync_clips(a, b):
     a_audio = stereo_to_mono(a.audio.to_soundarray())
-    a_r = a_audio.fps
+    a_r = a.audio.fps
     b_audio = stereo_to_mono(b.audio.to_soundarray())
     b_r = b.audio.fps
+    pq = queue.PriorityQueue()
+    for e in PATH_STEPS:
+        cost = get_cost(FRAME_LENGTH, e, a, b, a_r, a_audio, b_r, b_audio)
+        pq.put((cost, FRAME_LENGTH, e, [e]))
+    visited = {}
+    paths = []
+    while pq.empty() == False:
+        sc, sa, sb, sp = pq.get()
+        key = (sa, sb)
+        if key not in visited or visited[key] > sc:
+            for n in PATH_STEPS:
+                nat = sa + FRAME_LENGTH
+                nbt = sb + n
+                if nat < a.duration and nbt < b.duration:
+                    ncost = get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
+                    pq.put((ncost, nat, nbt, sp + [n]))
+                elif nat >= a.duration:
+                    paths.append(sp)
+            visited[key] = sc
+
+    print(paths)
+
+a = VideoFileClip("angry.mp4")
+b = VideoFileClip("sad.mp4")
+sync_clips(a, b)
+
+
