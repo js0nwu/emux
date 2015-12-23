@@ -13,9 +13,9 @@ import blender
 
 import queue
 
-PATH_STEPS = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]
+PATH_STEPS = [0.5, 1.0, 1.5, 2.0]
 
-FRAME_LENGTH = 0.1
+FRAME_LENGTH = 3
 
 
 def mel(hertz):
@@ -85,20 +85,24 @@ def sync_clips(a, b):
     b_r = b.audio.fps
     pq = queue.PriorityQueue()
     for e in PATH_STEPS:
-        cost = get_cost(FRAME_LENGTH, e, a, b, a_r, a_audio, b_r, b_audio)
-        pq.put((cost, FRAME_LENGTH, e, [e]))
+        ew = e * FRAME_LENGTH
+        cost = get_cost(FRAME_LENGTH, ew, a, b, a_r, a_audio, b_r, b_audio)
+        pq.put((cost, FRAME_LENGTH, ew, [ew]))
     visited = {}
     paths = []
     while pq.empty() == False:
         sc, sa, sb, sp = pq.get()
+        print(sa)
         key = (sa, sb)
         if key not in visited or visited[key] > sc:
+            # pruning heuristic for min time left on sa
             for n in PATH_STEPS:
+                nw = n * FRAME_LENGTH
                 nat = sa + FRAME_LENGTH
-                nbt = sb + n
+                nbt = sb + nw
                 if nat < a.duration and nbt < b.duration:
                     ncost = get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
-                    pq.put((ncost, nat, nbt, sp + [n]))
+                    pq.put((ncost, nat, nbt, sp + [nw]))
                 elif nat >= a.duration:
                     paths.append(sp)
             visited[key] = sc
