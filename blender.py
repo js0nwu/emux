@@ -5,7 +5,7 @@
 import cv2
 import dlib
 import numpy
-import numpy.linalg.norm
+import numpy.linalg
 
 UPSAMPLE = 1
 
