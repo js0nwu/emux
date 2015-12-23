@@ -17,7 +17,7 @@ import numpy.linalg
 
 PATH_STEPS = [0.5, 1.0, 1.5, 2.0]
 
-FRAME_LENGTH = 3
+FRAME_LENGTH = 1.5
 
 
 def mel(hertz):
@@ -96,21 +96,22 @@ def sync_clips(a, b):
     while pq.empty() == False:
         sc, sa, sb, sp = pq.get()
         print(sa)
+        # pruning heuristic for min time left on sa and visited?
+        stepsleft = (a.duration - sa) / FRAME_LENGTH
+        if sb + stepsleft * numpy.min(PATH_STEPS) >= b.duration:
+            continue
         if minpath is not None and sc >= minpath:
             continue
         key = (sa, sb)
-        print(key)
-        print(visited)
         if key in visited:
             continue
-        # pruning heuristic for min time left on sa and visited?
         for n in PATH_STEPS:
             nw = n * FRAME_LENGTH
             nat = sa + FRAME_LENGTH
             nbt = sb + nw
             if nat >= a.duration:
                 ncost = sc + get_cost(a.duration, min(nbt, b.duration), a, b, a_r, a_audio, b_r, b_audio)
-                paths.put((ncost, sp + [nw]))
+                paths.put((ncost, sp + [min(b.duration - sb, nw)]))
                 if minpath is None or sc < minpath:
                     minpath = sc
                 continue
@@ -122,8 +123,6 @@ def sync_clips(a, b):
 
         visited.append(key)
 
-    print(paths)
-    print(minpath)
     scost, spath = paths.get()
     clips = []
     cstart = 0
