@@ -95,13 +95,15 @@ def sync_clips(a, b):
     minpath = None
     while pq.empty() == False:
         sc, sa, sb, sp = pq.get()
-        print(sa)
         # pruning heuristic for min time left on sa and visited?
         stepsleft = (a.duration - sa) / FRAME_LENGTH
         if sb + stepsleft * numpy.min(PATH_STEPS) >= b.duration:
             continue
+        if sb + (stepsleft + 1) * numpy.max(PATH_STEPS) < b.duration:
+            continue
         if minpath is not None and sc >= minpath:
             continue
+        print(sa)
         key = (sa, sb)
         if key in visited:
             continue
@@ -109,13 +111,13 @@ def sync_clips(a, b):
             nw = n * FRAME_LENGTH
             nat = sa + FRAME_LENGTH
             nbt = sb + nw
+            if nbt >= b.duration:
+                continue
             if nat >= a.duration:
-                ncost = sc + get_cost(a.duration, min(nbt, b.duration), a, b, a_r, a_audio, b_r, b_audio)
-                paths.put((ncost, sp + [min(b.duration - sb, nw)]))
+                ncost = sc + get_cost(a.duration, nbt, a, b, a_r, a_audio, b_r, b_audio)
+                paths.put((ncost, sp + [nw]))
                 if minpath is None or sc < minpath:
                     minpath = sc
-                continue
-            if nbt >= b.duration:
                 continue
 
             ncost = sc + get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
@@ -124,6 +126,7 @@ def sync_clips(a, b):
         visited.append(key)
 
     scost, spath = paths.get()
+    print(spath)
     clips = []
     cstart = 0
     for seg in spath:
