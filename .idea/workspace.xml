@@ -39,8 +39,8 @@
       <file leaf-file-name="syncer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/syncer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4678055">
-              <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.60972404">
+              <caret line="120" column="12" selection-start-line="120" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -518,7 +518,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450907166625</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="use PQ for paths and handle remainder in initial path tree">
+      <created>1450908066800</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1450908066800</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -600,7 +606,8 @@
     <MESSAGE value="prune based on mincost" />
     <MESSAGE value="use numpy linalg norm" />
     <MESSAGE value="fixed incorrect python import statement" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed incorrect python import statement" />
+    <MESSAGE value="use PQ for paths and handle remainder in initial path tree" />
+    <option name="LAST_COMMIT_MESSAGE" value="use PQ for paths and handle remainder in initial path tree" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1052,8 +1059,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/syncer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4678055">
-          <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.60972404">
+          <caret line="120" column="12" selection-start-line="120" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>

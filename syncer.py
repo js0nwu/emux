@@ -108,14 +108,18 @@ def sync_clips(a, b):
             nw = n * FRAME_LENGTH
             nat = sa + FRAME_LENGTH
             nbt = sb + nw
-            if nat < a.duration and nbt < b.duration:
-                ncost = sc + get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
-                pq.put((ncost, nat, nbt, sp + [nw]))
-            elif nat >= a.duration:
+            if nat >= a.duration:
                 ncost = sc + get_cost(a.duration, min(nbt, b.duration), a, b, a_r, a_audio, b_r, b_audio)
                 paths.put((ncost, sp + [nw]))
                 if minpath is None or sc < minpath:
                     minpath = sc
+                continue
+            if nbt >= b.duration:
+                continue
+
+            ncost = sc + get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
+            pq.put((ncost, nat, nbt, sp + [nw]))
+
         visited.append(key)
 
     print(paths)
