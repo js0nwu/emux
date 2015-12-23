@@ -13,6 +13,8 @@ import blender
 
 PATH_STEPS = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]
 
+FRAME_LENGTH = 0.5
+
 def mel(hertz):
     return 1125 * numpy.log(1 + hertz/ 700)
 def mel_inv(mels):
@@ -54,6 +56,11 @@ def mfcc_distance(r1, s1, r2, s2):
     b = mfcc(s2, r2)
     return numpy.sqrt(numpy.sum(numpy.square(b - a)))
 
+def extract_frame(r, s, t, l =FRAME_LENGTH):
+    index_start = r * t
+    index_end = r * (t + l)
+    return s[index_start:index_end]
+
 def cost1(t1, t2, av, bv):
     return blender.face_distance(av.get_frame(t1), bv.get_frame(t2))
 
@@ -69,18 +76,8 @@ def remainder(ta, tb, tastep):
 def stereo_to_mono(s):
     return utility.float2pcm(numpy.mean(s, axis = 1))
 
-def sync_clips(a, b, t):
+def sync_clips(a, b):
+    a_audio = stereo_to_mono(a.audio.to_soundarray())
+    a_r = a_audio.fps
     b_audio = stereo_to_mono(b.audio.to_soundarray())
     b_r = b.audio.fps
-    time = a.duration
-    clips = []
-    clip_start = 0
-    while time > 0:
-        clip_length = min(time, t)
-        a_clip = a.subclip(clip_start, clip_start + clip_length)
-        a_audio = stereo_to_mono(a_clip.audio.to_soundarray())
-
-        clip_start += clip_length
-        time -= clip_length
-    synced = concatenate(clips)
-    return synced
