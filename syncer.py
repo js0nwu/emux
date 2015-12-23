@@ -95,22 +95,33 @@ def sync_clips(a, b):
         print(sa)
         key = (sa, sb)
         if key not in visited or visited[key] > sc:
-            # pruning heuristic for min time left on sa
+            # pruning heuristic for min time left on sa and visited?
             for n in PATH_STEPS:
                 nw = n * FRAME_LENGTH
                 nat = sa + FRAME_LENGTH
                 nbt = sb + nw
                 if nat < a.duration and nbt < b.duration:
-                    ncost = get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
+                    ncost = sc + get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
                     pq.put((ncost, nat, nbt, sp + [nw]))
                 elif nat >= a.duration:
-                    paths.append(sp)
+                    paths.append((sc, sp))
             visited[key] = sc
 
     print(paths)
+    scost, spath = paths[0]
+    clips = []
+    cstart = 0
+    for seg in spath:
+        clips.append(b.subclip(cstart, cstart+ seg).speedx(seg / FRAME_LENGTH))
+        cstart += seg
+
+    remainder = b.subclip(cstart, b.duration).speedx((b.duration - cstart) / (a.duration % FRAME_LENGTH))
+    clips.append(remainder)
+    return concatenate(clips)
 
 a = VideoFileClip("angry.mp4")
 b = VideoFileClip("sad.mp4")
-sync_clips(a, b)
+synced = sync_clips(a, b)
+synced.set_audio(a.audio).write_videofile("happysync.mp4")
 
 
