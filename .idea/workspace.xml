@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emopillow.py" afterPath="$PROJECT_DIR$/emopillow.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syncer.py" afterPath="$PROJECT_DIR$/syncer.py" />
     </list>
     <ignored path="emopillow.iws" />
@@ -28,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/emopillow.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
+              <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -39,8 +40,8 @@
       <file leaf-file-name="syncer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/syncer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.84557235">
-              <caret line="115" column="21" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.300216">
+              <caret line="97" column="20" selection-start-line="97" selection-start-column="20" selection-end-line="97" selection-end-column="20" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -132,8 +133,8 @@
         <option value="$PROJECT_DIR$/haar.txt" />
         <option value="$PROJECT_DIR$/hog.txt" />
         <option value="$PROJECT_DIR$/test2.py" />
-        <option value="$PROJECT_DIR$/emopillow.py" />
         <option value="$PROJECT_DIR$/blender.py" />
+        <option value="$PROJECT_DIR$/emopillow.py" />
         <option value="$PROJECT_DIR$/syncer.py" />
       </list>
     </option>
@@ -492,7 +493,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450875936748</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fixed but with subclip times">
+      <created>1450878815940</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1450878815940</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -570,7 +577,8 @@
     <MESSAGE value="need to fix audio cost. also fixed euclidian distance calculation" />
     <MESSAGE value="badly implemented dijkstra's algorithm - no wonder i got a B in CS 1332" />
     <MESSAGE value="fixes and notes to self" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes and notes to self" />
+    <MESSAGE value="fixed but with subclip times" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed but with subclip times" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -976,16 +984,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emopillow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/badsyncer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1004,10 +1002,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/emopillow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/syncer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.84557235">
-          <caret line="115" column="21" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.300216">
+          <caret line="97" column="20" selection-start-line="97" selection-start-column="20" selection-end-line="97" selection-end-column="20" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>

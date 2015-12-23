@@ -90,9 +90,12 @@ def sync_clips(a, b):
         pq.put((cost, FRAME_LENGTH, ew, [ew]))
     visited = {}
     paths = []
+    minpath = None
     while pq.empty() == False:
         sc, sa, sb, sp = pq.get()
         print(sa)
+        if minpath is not None and sc >= minpath:
+            continue
         key = (sa, sb)
         if key not in visited or visited[key] > sc:
             # pruning heuristic for min time left on sa and visited?
@@ -105,9 +108,12 @@ def sync_clips(a, b):
                     pq.put((ncost, nat, nbt, sp + [nw]))
                 elif nat >= a.duration:
                     paths.append((sc, sp))
+                    if minpath is None or sc < minpath:
+                        minpath = sc
             visited[key] = sc
 
     print(paths)
+    print(minpath)
     scost, spath = paths[0]
     clips = []
     cstart = 0
