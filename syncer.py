@@ -13,6 +13,8 @@ import blender
 
 import queue
 
+import numpy.linalg
+
 PATH_STEPS = [0.5, 1.0, 1.5, 2.0]
 
 FRAME_LENGTH = 3
@@ -57,7 +59,7 @@ def mfcc(frame, frequency):
 def mfcc_distance(r1, s1, r2, s2):
     a = mfcc(s1, r1)
     b = mfcc(s2, r2)
-    return numpy.sqrt(numpy.sum(numpy.square(b - a)))
+    return numpy.linalg.norm(b - a)
 
 def extract_frame(r, s, t, l =FRAME_LENGTH):
     index_start = r * t
@@ -88,7 +90,7 @@ def sync_clips(a, b):
         ew = e * FRAME_LENGTH
         cost = get_cost(FRAME_LENGTH, ew, a, b, a_r, a_audio, b_r, b_audio)
         pq.put((cost, FRAME_LENGTH, ew, [ew]))
-    visited = {}
+    visited = []
     paths = []
     minpath = None
     while pq.empty() == False:
@@ -97,20 +99,21 @@ def sync_clips(a, b):
         if minpath is not None and sc >= minpath:
             continue
         key = (sa, sb)
-        if key not in visited or visited[key] > sc:
-            # pruning heuristic for min time left on sa and visited?
-            for n in PATH_STEPS:
-                nw = n * FRAME_LENGTH
-                nat = sa + FRAME_LENGTH
-                nbt = sb + nw
-                if nat < a.duration and nbt < b.duration:
-                    ncost = sc + get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
-                    pq.put((ncost, nat, nbt, sp + [nw]))
-                elif nat >= a.duration:
-                    paths.append((sc, sp))
-                    if minpath is None or sc < minpath:
-                        minpath = sc
-            visited[key] = sc
+        if key in visited:
+            continue
+        # pruning heuristic for min time left on sa and visited?
+        for n in PATH_STEPS:
+            nw = n * FRAME_LENGTH
+            nat = sa + FRAME_LENGTH
+            nbt = sb + nw
+            if nat < a.duration and nbt < b.duration:
+                ncost = sc + get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
+                pq.put((ncost, nat, nbt, sp + [nw]))
+            elif nat >= a.duration:
+                paths.append((sc, sp))
+                if minpath is None or sc < minpath:
+                    minpath = sc
+        visited.append(key)
 
     print(paths)
     print(minpath)
