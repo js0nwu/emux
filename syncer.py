@@ -20,7 +20,7 @@ import numpy.linalg
 
 import os
 
-PATH_STEPS = [1/2, 3/4, 1, 4/3, 2/1]
+PATH_STEPS = [1/2, 2/3, 3/4, 1, 4/3, 3/2, 2/1]
 
 FRAME_LENGTH = 0.5
 
