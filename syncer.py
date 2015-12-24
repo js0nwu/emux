@@ -128,6 +128,7 @@ def sync_clips(a, b):
             continue
         if minpath is not None and sc >= minpath:
             continue
+        print(sa)
         key = (sa, sb)
         if key in visited:
             continue

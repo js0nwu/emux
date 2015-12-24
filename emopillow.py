@@ -15,12 +15,15 @@ b = VideoFileClip(VIDEO_B)
 
 synced_b = syncer.sync_clips(a, b)
 
+print("done syncing")
+
 time = 0
 tstep = 1 / OUTPUT_FPS
 frame = 0
 while time < a.duration:
-    frame_a = a.get_frame(time)
-    frame_b = b.get_frame(time)
+    print("frame at " + str(time))
+    frame_a = cv2.cvtColor(a.get_frame(time), cv2.COLOR_RGB2BGR)
+    frame_b = cv2.cvtColor(b.get_frame(time), cv2.COLOR_RGB2BGR)
     frame_c = blender.generate_midframe(frame_a, frame_b, 0.5)
     cv2.imwrite("frame" + str(frame) + ".jpg", frame_c)
     frame += 1
