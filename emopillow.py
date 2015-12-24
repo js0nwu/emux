@@ -20,6 +20,8 @@ print("done syncing")
 time = 0
 tstep = 1 / OUTPUT_FPS
 frame = 0
+
+# TODO multithread this
 while time < a.duration:
     print("frame at " + str(time))
     frame_a = cv2.cvtColor(a.get_frame(time), cv2.COLOR_RGB2BGR)
