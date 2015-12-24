@@ -13,7 +13,7 @@ FACE_CASCADE_PATH = 'train/haarcascade_frontalface_default.xml'
 
 FACE_PREDICTOR_PATH = 'train/shape_predictor_68_face_landmarks.dat'
 
-HOG_DETECT = False
+HOG_DETECT = True
 
 FACE_SCALE = 1.3
 FACE_NEIGHBOR = 5

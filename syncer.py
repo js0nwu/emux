@@ -1,6 +1,7 @@
 import numpy
 
 from scipy.signal import hamming
+import scipy.io.wavfile as wav
 
 import itertools
 from scipy.fftpack import dct, fft
@@ -13,19 +14,27 @@ import blender
 
 import queue
 
+import librosa.effects as re
+
 import numpy.linalg
 
 PATH_STEPS = [0.5, 1.0, 2.0]
 
-FRAME_LENGTH = 0.5
+FRAME_LENGTH = 1.0
 
 
 def mel(hertz):
-    return 1125 * numpy.log(1 + hertz/ 700)
+    return 1125 * numpy.log(1 + hertz / 700)
+
+
 def mel_inv(mels):
     return 700 * (numpy.exp(mels / 1125) - 1)
+
+
 def filterbanks(low, high, num):
     return [mel_inv(x) for x in list(range(int(mel(low)), int(mel(high)), int((mel(high) - mel(low)) / (num - 1))))]
+
+
 def hf(f, m, k):
     if k < f[max(0, m - 1)]:
         return 0
@@ -37,6 +46,8 @@ def hf(f, m, k):
         return 0
     else:
         return 0
+
+
 def frame_power_transform(frame):
     n = 256
     window = hamming(frame.size)
@@ -44,41 +55,53 @@ def frame_power_transform(frame):
     frame_power = numpy.abs(numpy.square(frame_dft))
     return frame_power
 
+
 def signal_energy(frame):
     return numpy.sum(frame_power_transform(frame))
+
 
 def mfcc(frame, frequency):
     frame_power = frame_power_transform(frame)
     # code to auto determine filter bank frequency range based on input audio sample rate
     frame_banks = [int(((frame_power.size + 1) * x) / frequency) for x in filterbanks(200, int(frequency / 2), 12)]
     max_bank = numpy.max(numpy.asarray(frame_banks))
-    frame_mels = list(itertools.starmap(lambda x, y : hf(frame_banks, x, y) * frame_power[y], itertools.product(range(len(frame_banks)), range(max_bank))))
+    frame_mels = list(itertools.starmap(lambda x, y: hf(frame_banks, x, y) * frame_power[y],
+                                        itertools.product(range(len(frame_banks)), range(max_bank))))
     frame_ampl = [numpy.log(numpy.sum(x)) if x != 0 else 0 for x in frame_mels]
     return dct(frame_ampl, axis=0)
+
 
 def mfcc_distance(r1, s1, r2, s2):
     a = mfcc(s1, r1)
     b = mfcc(s2, r2)
     return numpy.linalg.norm(b - a)
 
-def extract_frame(r, s, t, l =FRAME_LENGTH):
+def extract_frame(r, s, t, l=FRAME_LENGTH):
     index_start = r * t
     index_end = r * (t + l)
     return s[index_start:index_end]
 
+
 def cost1(t1, t2, av, bv):
     return blender.face_distance(av.get_frame(t1), bv.get_frame(t2))
+
 
 def cost2(t1, t2, ar, aa, br, ba):
     af = extract_frame(ar, aa, t1)
     bf = extract_frame(br, ba, t2)
     return mfcc_distance(ar, af, br, bf)
 
-def get_cost(t1, t2, av, bv, ar, aa, br, ba):
-    return cost1(t1, t2, av, bv) + cost2(t1, t2, ar, aa, br, ba)
+
+def get_cost(t1, t2, av, bv, ar, aa, br, ba, landmarks=False):
+    if landmarks:
+        return cost1(t1, t2, av, bv) + cost2(t1, t2, ar, aa, br, ba)
+    else:
+        return cost2(t1, t2, ar, aa, br, ba)
+
 
 def stereo_to_mono(s):
     return utility.float2pcm(numpy.mean(s, axis=1))
+
 
 def sync_clips(a, b):
     a_audio = stereo_to_mono(a.audio.to_soundarray())
@@ -120,7 +143,7 @@ def sync_clips(a, b):
                 if minpath is None or sc < minpath:
                     minpath = sc
                 continue
-            ncost = sc + get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
+            ncost = sc + get_cost(nat, nbt, a, b, a_r, a_audio, b_r, b_audio)
             pq.put((ncost, nat, nbt, sp + [nw]))
 
         visited.append(key)
@@ -130,14 +153,20 @@ def sync_clips(a, b):
     clips = []
     cstart = 0
     for seg in spath:
-        clips.append(b.subclip(cstart, cstart + seg).speedx(seg / FRAME_LENGTH))
+        clip = b.subclip(cstart, cstart + seg)
+        stretch_factor = seg / FRAME_LENGTH
+        a_array = re.time_stretch(utility.pcm2float(stereo_to_mono(clip.audio.to_soundarray())), stretch_factor)
+        print(numpy.max(a_array))
+        wav.write("tmp.wav", clip.audio.fps, a_array)
+        clip_audio = AudioFileClip("tmp.wav")
+        clip = clip.speedx(stretch_factor).set_audio(clip_audio)
+        clips.append(clip)
         cstart += seg
 
     return concatenate(clips).subclip(0, a.duration)
 
+
 a = VideoFileClip("angry.mp4")
 b = VideoFileClip("sad.mp4")
-# synced = sync_clips(a, b)
-# synced.write_videofile("happysync.mp4")
-
-
+synced = sync_clips(a, b)
+synced.write_videofile("happysync.mp4")
