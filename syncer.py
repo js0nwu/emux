@@ -165,8 +165,3 @@ def sync_clips(a, b):
 
     return concatenate(clips).subclip(0, a.duration)
 
-
-a = VideoFileClip("angry.mp4")
-b = VideoFileClip("sad.mp4")
-synced = sync_clips(a, b)
-synced.write_videofile("happysync.mp4")
