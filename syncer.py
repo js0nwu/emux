@@ -18,9 +18,11 @@ import librosa.effects as re
 
 import numpy.linalg
 
-PATH_STEPS = [0.5, 1.0, 2.0]
+import os
 
-FRAME_LENGTH = 1.0
+PATH_STEPS = [1/2, 3/4, 1, 4/3, 2/1]
+
+FRAME_LENGTH = 0.5
 
 
 def mel(hertz):
@@ -126,7 +128,6 @@ def sync_clips(a, b):
             continue
         if minpath is not None and sc >= minpath:
             continue
-        print(sa)
         key = (sa, sb)
         if key in visited:
             continue
@@ -149,16 +150,15 @@ def sync_clips(a, b):
         visited.append(key)
 
     scost, spath = paths.get()
-    print(spath)
     clips = []
     cstart = 0
     for seg in spath:
         clip = b.subclip(cstart, cstart + seg)
         stretch_factor = seg / FRAME_LENGTH
         a_array = re.time_stretch(utility.pcm2float(stereo_to_mono(clip.audio.to_soundarray())), stretch_factor)
-        print(numpy.max(a_array))
         wav.write("tmp.wav", clip.audio.fps, a_array)
         clip_audio = AudioFileClip("tmp.wav")
+        os.remove("tmp.wav")
         clip = clip.speedx(stretch_factor).set_audio(clip_audio)
         clips.append(clip)
         cstart += seg
