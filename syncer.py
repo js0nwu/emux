@@ -15,9 +15,9 @@ import queue
 
 import numpy.linalg
 
-PATH_STEPS = [0.5, 1.0, 1.5, 2.0]
+PATH_STEPS = [0.5, 1.0, 2.0]
 
-FRAME_LENGTH = 1.5
+FRAME_LENGTH = 0.5
 
 
 def mel(hertz):
@@ -114,12 +114,12 @@ def sync_clips(a, b):
             if nbt >= b.duration:
                 continue
             if nat >= a.duration:
-                ncost = sc + get_cost(a.duration, nbt, a, b, a_r, a_audio, b_r, b_audio)
+                b_fact = ((a.duration - sa) / FRAME_LENGTH) * nw
+                ncost = sc + get_cost(a.duration, sb + b_fact, a, b, a_r, a_audio, b_r, b_audio)
                 paths.put((ncost, sp + [nw]))
                 if minpath is None or sc < minpath:
                     minpath = sc
                 continue
-
             ncost = sc + get_cost(nat, nbt, a, b,  a_r, a_audio, b_r, b_audio)
             pq.put((ncost, nat, nbt, sp + [nw]))
 
@@ -130,14 +130,14 @@ def sync_clips(a, b):
     clips = []
     cstart = 0
     for seg in spath:
-        clips.append(b.subclip(cstart, cstart+ seg).speedx(seg / FRAME_LENGTH))
+        clips.append(b.subclip(cstart, cstart + seg).speedx(seg / FRAME_LENGTH))
         cstart += seg
 
-    return concatenate(clips)
+    return concatenate(clips).subclip(0, a.duration)
 
 a = VideoFileClip("angry.mp4")
 b = VideoFileClip("sad.mp4")
-synced = sync_clips(a, b)
-synced.set_audio(a.audio).write_videofile("happysync.mp4")
+# synced = sync_clips(a, b)
+# synced.write_videofile("happysync.mp4")
 
 
