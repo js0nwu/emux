@@ -88,8 +88,6 @@ def sync_clips(a, b):
             if nbt >= b.duration:
                 continue
             if nat >= a.duration:
-                b_fact = ((a.duration - sa) / FRAME_LENGTH) * nw
-                ncost = sc + get_cost(a.duration, min(sb + b_fact, b.duration), a, b, a_r, a_audio, b_r, b_audio)
                 spath = sp + [nw]
                 break
             ncost = get_cost(nat, nbt, a, b, a_r, a_audio, b_r, b_audio)
