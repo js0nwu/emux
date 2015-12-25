@@ -26,6 +26,8 @@ PATH_STEPS = [1 / 2, 1, 2 / 1]
 FRAME_LENGTH = 0.5
 
 def mfcc_distance(r1, s1, r2, s2):
+    if s1.size == 0 or s2.size == 0:
+        return 0
     a = numpy.sum(rf.mfcc(s1, r1), axis=1)
     b = numpy.sum(rf.mfcc(s2, r2), axis=1)
     # return numpy.linalg.norm(b - a)
