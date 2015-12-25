@@ -101,7 +101,7 @@ def sync_clips(a, b):
                 if minpath is None or sc < minpath:
                     minpath = sc
                 continue
-            ncost = sc + get_cost(nat, nbt, a, b, a_r, a_audio, b_r, b_audio)
+            ncost = get_cost(nat, nbt, a, b, a_r, a_audio, b_r, b_audio)
             pq.put((ncost, nat, nbt, sp + [nw]))
 
         visited.append(key)
