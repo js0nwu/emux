@@ -33,7 +33,7 @@ def process_frame(a, b, factor, frame):
 while time < a.duration:
     print("frame at " + str(time))
     # process_frame(a.get_frame(time), synced_b.get_frame(time), 0.85, frame)
-    t = Thread(target=process_frame, args=(a.get_frame(time), synced_b.get_frame(time), 0.85, frame,))
+    t = Thread(target=process_frame, args=(a.get_frame(time), synced_b.get_frame(time), 1.0, frame,))
     t.start()
     frame += 1
     time += tstep
