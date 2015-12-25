@@ -23,12 +23,14 @@ import os
 
 PATH_STEPS = [1 / 2, 1, 2 / 1]
 
-FRAME_LENGTH = 0.1
+FRAME_LENGTH = 0.5
 
 def mfcc_distance(r1, s1, r2, s2):
-    a = rf.mfcc(s1, r1)
-    b = rf.mfcc(s2, r2)
-    return numpy.linalg.norm(b - a)
+    a = numpy.sum(rf.mfcc(s1, r1), axis=1)
+    b = numpy.sum(rf.mfcc(s2, r2), axis=1)
+    # return numpy.linalg.norm(b - a)
+    c = b - a
+    return numpy.sqrt(c.dot(c))
 
 def extract_frame(r, s, t, l=FRAME_LENGTH):
     index_start = r * t
@@ -92,7 +94,7 @@ def sync_clips(a, b):
                 continue
             if nat >= a.duration:
                 b_fact = ((a.duration - sa) / FRAME_LENGTH) * nw
-                ncost = sc + get_cost(a.duration, sb + b_fact, a, b, a_r, a_audio, b_r, b_audio)
+                ncost = sc + get_cost(a.duration, min(sb + b_fact, b.duration), a, b, a_r, a_audio, b_r, b_audio)
                 paths.put((ncost, sp + [nw]))
                 if minpath is None or sc < minpath:
                     minpath = sc
