@@ -245,7 +245,7 @@ def face_distance(mat_picture, mat_replace):
     r3 = numpy.asarray([l + [1] for l in r_landmarks])
     f3 = cv2.transform(f3, numpy.identity(3))
     dst_land = cv2.transform(r3, transform)
-    return numpy.sum([numpy.linalg.norm(dst_land[i] - f3[i]) for i in range(len(dst_land))])
+    return numpy.sum(numpy.linalg.norm(dst_land - f3))
 
 def face_swap(mat_picture, mat_replace, poisson = False):
     p_gray = cv2.cvtColor(mat_picture, cv2.COLOR_BGR2GRAY)

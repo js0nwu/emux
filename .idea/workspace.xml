@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="use librosa for mfcc">
+    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="fixed wrong librosa import">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syncer.py" afterPath="$PROJECT_DIR$/syncer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blender.py" afterPath="$PROJECT_DIR$/blender.py" />
     </list>
     <ignored path="emopillow.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,9 +39,11 @@
       <file leaf-file-name="syncer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/syncer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.06693712">
-              <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-              <folding />
+            <state vertical-scroll-proportion="0.4979716">
+              <caret line="48" column="60" selection-start-line="48" selection-start-column="60" selection-end-line="48" selection-end-column="60" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -96,7 +98,7 @@
         <entry file="file://$PROJECT_DIR$/blender.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+              <caret line="247" column="47" selection-start-line="247" selection-start-column="47" selection-end-line="247" selection-end-column="47" />
               <folding>
                 <element signature="e#136#146#0" expanded="true" />
               </folding>
@@ -122,9 +124,9 @@
         <option value="$PROJECT_DIR$/haar.txt" />
         <option value="$PROJECT_DIR$/hog.txt" />
         <option value="$PROJECT_DIR$/test2.py" />
-        <option value="$PROJECT_DIR$/blender.py" />
         <option value="$PROJECT_DIR$/../paulstretch_python/paulstretch_mono.py" />
         <option value="$PROJECT_DIR$/emopillow.py" />
+        <option value="$PROJECT_DIR$/blender.py" />
         <option value="$PROJECT_DIR$/syncer.py" />
       </list>
     </option>
@@ -608,7 +610,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451005084865</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="fixed wrong librosa import">
+      <created>1451005183260</created>
+      <option name="number" value="00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1451005183260</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -667,7 +675,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="why is duration nan" />
     <MESSAGE value="sort of works now - replacing zero duration matches with original" />
     <MESSAGE value="play around with step increment" />
     <MESSAGE value="try using MFCC for better generated images?" />
@@ -692,7 +699,8 @@
     <MESSAGE value="add more speed options" />
     <MESSAGE value="fixed the min steps and max steps pruning condition" />
     <MESSAGE value="use librosa for mfcc" />
-    <option name="LAST_COMMIT_MESSAGE" value="use librosa for mfcc" />
+    <MESSAGE value="fixed wrong librosa import" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed wrong librosa import" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1074,16 +1082,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blender.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
-          <folding>
-            <element signature="e#136#146#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/badsyncer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1122,6 +1120,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/blender.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="247" column="47" selection-start-line="247" selection-start-column="47" selection-end-line="247" selection-end-column="47" />
+          <folding>
+            <element signature="e#136#146#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/emopillow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1134,9 +1142,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/syncer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06693712">
-          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-          <folding />
+        <state vertical-scroll-proportion="0.4979716">
+          <caret line="48" column="60" selection-start-line="48" selection-start-column="60" selection-end-line="48" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
