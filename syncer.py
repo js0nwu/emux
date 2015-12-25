@@ -1,10 +1,6 @@
 import numpy
 
-from scipy.signal import hamming
 import scipy.io.wavfile as wav
-
-import itertools
-from scipy.fftpack import dct, fft
 
 from audiofiles import utility
 

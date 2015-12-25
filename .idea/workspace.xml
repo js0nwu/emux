@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="made multithreaded - not sure if it is faster">
+    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="dijkstra's - implemented correctly this time">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syncer.py" afterPath="$PROJECT_DIR$/syncer.py" />
     </list>
@@ -39,11 +39,9 @@
       <file leaf-file-name="syncer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/syncer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29571107">
-              <caret line="103" column="20" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.03724605">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -634,7 +632,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451024634762</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="dijkstra's - implemented correctly this time">
+      <created>1451074598081</created>
+      <option name="number" value="00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1451074598081</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -693,7 +697,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="use lowest cost path finding and implemented cost for facial landmarks" />
     <MESSAGE value="need to fix audio cost. also fixed euclidian distance calculation" />
     <MESSAGE value="badly implemented dijkstra's algorithm - no wonder i got a B in CS 1332" />
     <MESSAGE value="fixes and notes to self" />
@@ -718,7 +721,8 @@
     <MESSAGE value="make things a bit more efficient" />
     <MESSAGE value="linalg norm is so slow" />
     <MESSAGE value="made multithreaded - not sure if it is faster" />
-    <option name="LAST_COMMIT_MESSAGE" value="made multithreaded - not sure if it is faster" />
+    <MESSAGE value="dijkstra's - implemented correctly this time" />
+    <option name="LAST_COMMIT_MESSAGE" value="dijkstra's - implemented correctly this time" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1160,11 +1164,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/syncer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29571107">
-          <caret line="103" column="20" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.03724605">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
