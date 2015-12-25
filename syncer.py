@@ -15,13 +15,13 @@ import blender
 import queue
 
 import librosa.effects as re
-import librosa.features as rf
+import librosa.feature as rf
 
 import numpy.linalg
 
 import os
 
-PATH_STEPS = [1/2, 2/3, 3/4, 1, 4/3, 3/2, 2/1]
+PATH_STEPS = [1 / 2, 1, 2 / 1]
 
 FRAME_LENGTH = 0.1
 
