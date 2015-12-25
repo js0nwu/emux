@@ -122,9 +122,9 @@ def sync_clips(a, b):
         sc, sa, sb, sp = pq.get()
         # pruning heuristic for min time left on sa and visited?
         stepsleft = (a.duration - sa) / FRAME_LENGTH
-        if sb + stepsleft * numpy.min(PATH_STEPS) >= b.duration:
+        if sb + stepsleft * numpy.min(PATH_STEPS) * FRAME_LENGTH >= b.duration:
             continue
-        if sb + (stepsleft + 1) * numpy.max(PATH_STEPS) < b.duration:
+        if sb + (stepsleft + 1) * numpy.max(PATH_STEPS) * FRAME_LENGTH < b.duration:
             continue
         if minpath is not None and sc >= minpath:
             continue
