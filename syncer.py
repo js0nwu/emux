@@ -1,10 +1,10 @@
 import numpy
-
-import scipy.io.wavfile as wav
+import numpy.linalg
 
 from audiofiles import utility
 
 from moviepy.editor import *
+from moviepy.audio.AudioClip import *
 
 import blender
 
@@ -12,10 +12,6 @@ import queue
 
 import librosa.effects as re
 import librosa.feature as rf
-
-import numpy.linalg
-
-import os
 
 PATH_STEPS = [1 / 2, 1, 2 / 1]
 
@@ -100,9 +96,7 @@ def sync_clips(a, b):
         clip = b.subclip(cstart, cstart + seg)
         stretch_factor = seg / FRAME_LENGTH
         a_array = re.time_stretch(utility.pcm2float(stereo_to_mono(clip.audio.to_soundarray())), stretch_factor)
-        wav.write("tmp.wav", clip.audio.fps, a_array)
-        clip_audio = AudioFileClip("tmp.wav")
-        os.remove("tmp.wav")
+        clip_audio = AudioArrayClip([a_array], clip.audio.fps)
         clip = clip.speedx(stretch_factor).set_audio(clip_audio)
         clips.append(clip)
         cstart += seg
