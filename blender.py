@@ -7,6 +7,10 @@ import dlib
 import numpy
 import numpy.linalg
 
+import PIL as Image
+
+import ipa.warper as warp
+
 UPSAMPLE = 1
 
 FACE_CASCADE_PATH = 'train/haarcascade_frontalface_default.xml'
@@ -269,14 +273,16 @@ def projection_points(l):
     # return numpy.float32([numpy.mean(l[LEFT_BROW_POINTS], axis = 0), numpy.mean(l[RIGHT_BROW_POINTS], axis = 0), numpy.mean(l[LEFT_EYE_POINTS], axis = 0), numpy.mean(l[RIGHT_EYE_POINTS], axis = 0)])
 
 
-def warp_picture_landmarks(a, la, b, lb, f):
+def warp_picture_landmarks(a, la, b, lb, f, perspective=False):
     ldiff = lb - la
     ldiff *= f
     src = la
     dst = la + ldiff
-    M = cv2.getPerspectiveTransform(projection_points(src), projection_points(dst))
-    return cv2.warpPerspective(a, M, (b.shape[1], b.shape[0]))
-
+    if perspective:
+        M = cv2.getPerspectiveTransform(projection_points(src), projection_points(dst))
+        return cv2.warpPerspective(a, M, (b.shape[1], b.shape[0]))
+    else:
+        return warp.piecewise_affine(a, src, b, dst)
 
 def morph_picture(a, la, b, lb, mask, f, warp=True):
     if not warp:

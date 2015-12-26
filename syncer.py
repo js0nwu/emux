@@ -22,7 +22,6 @@ def mfcc_distance(r1, s1, r2, s2):
         return 0
     a = numpy.sum(rf.mfcc(s1, r1), axis=1)
     b = numpy.sum(rf.mfcc(s2, r2), axis=1)
-    # return numpy.linalg.norm(b - a)
     c = b - a
     return numpy.sqrt(c.dot(c))
 

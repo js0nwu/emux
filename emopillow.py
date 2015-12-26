@@ -15,6 +15,14 @@ OUTPUT_FPS = 10
 a = VideoFileClip(VIDEO_A)
 b = VideoFileClip(VIDEO_B)
 
+# a_frame = cv2.cvtColor(a.get_frame(6.6), cv2.COLOR_RGB2BGR)
+# b_frame = cv2.cvtColor(b.get_frame(6.6), cv2.COLOR_RGB2BGR)
+#
+# c_frame = blender.generate_midframe(a_frame, b_frame, 0.95)
+#
+# cv2.imwrite("c_frame.jpg", c_frame)
+
+
 synced_b = syncer.sync_clips(a, b)
 
 print("done syncing")
@@ -32,7 +40,6 @@ def process_frame(a, b, factor, frame):
 
 while time < a.duration:
     print("frame at " + str(time))
-    # process_frame(a.get_frame(time), synced_b.get_frame(time), 0.85, frame)
     t = Thread(target=process_frame, args=(a.get_frame(time), synced_b.get_frame(time), 1.0, frame,))
     t.start()
     frame += 1

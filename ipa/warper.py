@@ -1,3 +1,5 @@
+# basically reformatted code from here: https://github.com/TimSC/image-piecewise-affine retooled to work without PIL
+
 import numpy
 import scipy.spatial as spatial
 
@@ -99,7 +101,7 @@ def piecewise_affine(srcIm, srcPoints, dstIm, dstPoints):
     # print xmin, xmax, ymin, ymax
 
     # Determine which tesselation triangle contains each pixel in the shape norm image
-    inTessTriangle = numpy.ones(dstIm.size, dtype=numpy.int) * -1
+    inTessTriangle = numpy.ones(srcIm.shape[:2], dtype=numpy.int) * -1
     for i in range(int(xmin), int(xmax + 1.)):
         for j in range(int(ymin), int(ymax + 1.)):
             if i < 0 or i >= inTessTriangle.shape[0]: continue
@@ -119,13 +121,14 @@ def piecewise_affine(srcIm, srcPoints, dstIm, dstPoints):
 
     # Prepare arrays, check they are 3D
     targetArr = numpy.copy(numpy.asarray(dstIm, dtype=numpy.uint8))
-    srcArr = srcArr.reshape(srcArr.shape[0], srcArr.shape[1], len(srcIm.mode))
-    targetArr = targetArr.reshape(targetArr.shape[0], targetArr.shape[1], len(dstIm.mode))
+    srcArr = srcArr.reshape(srcArr.shape[0], srcArr.shape[1], srcIm.shape[2])
+    targetArr = targetArr.reshape(targetArr.shape[0], targetArr.shape[1], srcIm.shape[2])
 
+    triAffines = numpy.asarray(triAffines)
     # Calculate pixel colours
     warp_process(srcIm, srcArr, targetArr, inTessTriangle, triAffines, dstPoints)
 
     # Convert single channel images to 2D
     if targetArr.shape[2] == 1:
         targetArr = targetArr.reshape((targetArr.shape[0], targetArr.shape[1]))
-    dstIm.paste(Image.fromarray(targetArr))
+    return targetArr
