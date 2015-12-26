@@ -27,8 +27,7 @@ frames = []
 
 
 def get_factor(t):
-    return 0.5
-
+    return 0.8
 
 def mix_audio_frame(a, b, factor):
     if factor == 0:
@@ -52,11 +51,5 @@ while time < a.duration:
     time += tstep
 
 images = ImageSequenceClip(frames, fps=OUTPUT_FPS)
-a_audio = a.audio.to_soundarray()
-a_audio = blender.stereo_to_mono(a_audio)
-# a = a.set_audio(AudioArrayClip([a_audio], a.audio.fps))
-make_frame = lambda t: mix_audio_frame(a.audio.get_frame(t), synced_b.audio.get_frame(t), get_factor(t))
-audios = AudioClip(make_frame, duration=a.audio.duration)
-# images = images.set_audio(audios)
-images.set_audio(a.audio)
+images = images.set_audio(a.audio)
 images.to_videofile("glorious.mp4")

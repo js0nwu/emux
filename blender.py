@@ -302,4 +302,7 @@ def generate_midframe(a, b, f):
     output_picture, input_l, output_l, mask = face_swap(a, b)
     if f == 1:
         return output_picture
-    return morph_picture(a, input_l, output_picture, output_l, mask, f)
+    if f <= 0.5:
+        return morph_picture(a, input_l, output_picture, output_l, mask, f)
+    else:
+        return morph_picture(output_picture, output_l, a, input_l, mask, 1.0 - f)
