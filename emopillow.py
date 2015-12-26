@@ -20,6 +20,8 @@ synced_b = syncer.sync_clips(a, b)
 
 print("done syncing")
 
+exit(0)
+
 synced_b.to_videofile("happysync2.mp4")
 
 time = 0
