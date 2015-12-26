@@ -8,12 +8,10 @@ from moviepy.audio.AudioClip import *
 
 import syncer
 
-from threading import Thread
-
 VIDEO_A = "angry.mp4"
 VIDEO_B = "sad.mp4"
 
-OUTPUT_FPS = 0.25
+OUTPUT_FPS = 10
 
 a = VideoFileClip(VIDEO_A)
 b = VideoFileClip(VIDEO_B)

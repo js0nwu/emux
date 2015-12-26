@@ -16,7 +16,7 @@ import librosa.feature as rf
 
 PATH_STEPS = [1 / 2, 1, 2 / 1]
 
-FRAME_LENGTH = 3.0
+FRAME_LENGTH = 0.1
 
 def mfcc_distance(r1, s1, r2, s2):
     if s1.size == 0 or s2.size == 0:
