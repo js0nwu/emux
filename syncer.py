@@ -10,12 +10,15 @@ import blender
 
 import queue
 
+import os
+import scipy.io.wavfile as wav
+
 import librosa.effects as re
 import librosa.feature as rf
 
 PATH_STEPS = [1 / 2, 1, 2 / 1]
 
-FRAME_LENGTH = 0.5
+FRAME_LENGTH = 3.0
 
 def mfcc_distance(r1, s1, r2, s2):
     if s1.size == 0 or s2.size == 0:
@@ -90,10 +93,13 @@ def sync_clips(a, b):
         clip = b.subclip(cstart, cstart + seg)
         stretch_factor = seg / FRAME_LENGTH
         a_array = re.time_stretch(utility.pcm2float(blender.stereo_to_mono(clip.audio.to_soundarray())), stretch_factor)
-        clip_audio = AudioArrayClip([a_array], clip.audio.fps)
+        wav.write("tmp.wav", clip.audio.fps, a_array)
+        clip_audio = AudioFileClip("tmp.wav")
+        os.remove("tmp.wav")
         clip = clip.speedx(stretch_factor).set_audio(clip_audio)
         clips.append(clip)
         cstart += seg
 
-    return concatenate(clips).subclip(0, a.duration)
-
+    final_cut = concatenate(clips).subclip(0, a.duration)
+    final_cut.write_videofile("asdf.mp4")
+    return final_cut

@@ -1,6 +1,8 @@
 import blender
 import cv2
 
+import numpy
+
 from moviepy.editor import *
 from moviepy.audio.AudioClip import *
 
@@ -11,7 +13,7 @@ from threading import Thread
 VIDEO_A = "angry.mp4"
 VIDEO_B = "sad.mp4"
 
-OUTPUT_FPS = 10
+OUTPUT_FPS = 0.25
 
 a = VideoFileClip(VIDEO_A)
 b = VideoFileClip(VIDEO_B)
@@ -28,6 +30,18 @@ frames = []
 
 def get_factor(t):
     return 0.8
+
+
+def generate_audio(a, b, r, d):
+    t = 0
+    track = []
+    while t < d:
+        a_seg = a.subclip(t, min(d, t + tstep))
+        b_seg = b.subclip(t, min(d, t + tstep))
+        seg = CompositeAudioClip([a_seg.volumex(1 - get_factor(t)), b_seg.volumex(get_factor(t))])
+        track.append(seg)
+        t += tstep
+    return concatenate_audioclips(track)
 
 def mix_audio_frame(a, b, factor):
     if factor == 0:
@@ -51,5 +65,9 @@ while time < a.duration:
     time += tstep
 
 images = ImageSequenceClip(frames, fps=OUTPUT_FPS)
-images = images.set_audio(a.audio)
+a_audio = a.audio
+b_audio = synced_b.audio
+audios = generate_audio(a_audio, b_audio, a.audio.fps, a.audio.duration)
+audios.to_audiofile("badaudio.wav")
+images = images.set_audio(audios)
 images.to_videofile("glorious.mp4")
