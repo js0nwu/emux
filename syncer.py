@@ -60,7 +60,7 @@ def sync_clips(a, b):
         pq.put((cost, FRAME_LENGTH, ew, [ew]))
     visited = []
     spath = None
-    while pq.empty() == False:
+    while pq.empty() == False and spath == None:
         sc, sa, sb, sp = pq.get()
         # pruning heuristic for min time left on sa and visited?
         stepsleft = (a.duration - sa) / FRAME_LENGTH
