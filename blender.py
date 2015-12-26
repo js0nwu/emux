@@ -7,7 +7,7 @@ import dlib
 import numpy
 import numpy.linalg
 
-import PIL as Image
+from audiofiles import utility
 
 import ipa.warper as warp
 
@@ -62,6 +62,9 @@ def find_objects_hog(picture, detector):
 def get_landmarks(picture, bounding, predictor):
     return numpy.matrix([[p.x, p.y] for p in predictor(picture, bounding).parts()])
 
+
+def stereo_to_mono(s):
+    return utility.float2pcm(numpy.mean(s, axis=1))
 
 def col_string(color):
     if isinstance(color, str):

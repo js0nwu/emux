@@ -2,6 +2,7 @@ import blender
 import cv2
 
 from moviepy.editor import *
+from moviepy.audio.AudioClip import *
 
 import syncer
 
@@ -60,6 +61,9 @@ while time < a.duration:
     time += tstep
 
 images = ImageSequenceClip(frames, fps=OUTPUT_FPS)
+a_audio = a.audio.to_soundarray()
+a_audio = blender.stereo_to_mono(a_audio)
+a = a.set_audio(AudioArrayClip(a_audio, fps=a.audio.fps))
 make_frame = lambda t: mix_audio_frame(a.audio.get_frame(t), synced_b.audio.get_frame(t), get_factor(t))
 audios = AudioClip(make_frame, duration=a.audio.duration)
 images = images.set_audio(audios)

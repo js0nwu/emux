@@ -1,8 +1,6 @@
 import numpy
 import numpy.linalg
 
-from audiofiles import utility
-
 from moviepy.editor import *
 from moviepy.audio.AudioClip import *
 
@@ -47,15 +45,10 @@ def get_cost(t1, t2, av, bv, ar, aa, br, ba, landmarks=False):
     else:
         return cost2(t1, t2, ar, aa, br, ba)
 
-
-def stereo_to_mono(s):
-    return utility.float2pcm(numpy.mean(s, axis=1))
-
-
 def sync_clips(a, b):
-    a_audio = stereo_to_mono(a.audio.to_soundarray())
+    a_audio = blender.stereo_to_mono(a.audio.to_soundarray())
     a_r = a.audio.fps
-    b_audio = stereo_to_mono(b.audio.to_soundarray())
+    b_audio = blender.stereo_to_mono(b.audio.to_soundarray())
     b_r = b.audio.fps
     pq = queue.PriorityQueue()
     for e in PATH_STEPS:
@@ -94,7 +87,7 @@ def sync_clips(a, b):
     for seg in spath:
         clip = b.subclip(cstart, cstart + seg)
         stretch_factor = seg / FRAME_LENGTH
-        a_array = re.time_stretch(utility.pcm2float(stereo_to_mono(clip.audio.to_soundarray())), stretch_factor)
+        a_array = re.time_stretch(utility.pcm2float(blender.stereo_to_mono(clip.audio.to_soundarray())), stretch_factor)
         clip_audio = AudioArrayClip([a_array], clip.audio.fps)
         clip = clip.speedx(stretch_factor).set_audio(clip_audio)
         clips.append(clip)
