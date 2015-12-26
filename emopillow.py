@@ -32,7 +32,7 @@ def get_factor(t):
     return 0.8
 
 
-def generate_audio(a, b, r, d):
+def generate_audio(a, b, d):
     t = 0
     track = []
     while t < d:
@@ -67,7 +67,7 @@ while time < a.duration:
 images = ImageSequenceClip(frames, fps=OUTPUT_FPS)
 a_audio = a.audio
 b_audio = synced_b.audio
-audios = generate_audio(a_audio, b_audio, a.audio.fps, a.audio.duration)
+audios = generate_audio(a_audio, b_audio, a.audio.duration)
 audios.to_audiofile("badaudio.wav")
 images = images.set_audio(audios)
 images.to_videofile("glorious.mp4")
