@@ -287,11 +287,16 @@ def warp_picture_landmarks(a, la, b, lb, f, perspective=False):
 def morph_picture(a, la, b, lb, mask, f, warp=True):
     if not warp:
         return linear_blend(a, b, f)
-    warped_a = warp_picture_landmarks(a, la, b, lb, f)
-    warped_b = warp_picture_landmarks(b, lb, a, la, (1.0 - f))
-    return linear_blend(linear_blend_mask(a, warped_a, mask), linear_blend_mask(a, warped_b, mask), f)
+    # warped_a = warp_picture_landmarks(a, la, b, lb, f)
+    # warped_b = warp_picture_landmarks(b, lb, a, la, (1.0 - f))
+    # return linear_blend(linear_blend_mask(a, warped_a, mask), linear_blend_mask(a, warped_b, mask), f)
+    return linear_blend(a, linear_blend_mask(a, warp_picture_landmarks(a, la, b, lb, f), mask), f)
 
 
 def generate_midframe(a, b, f):
+    if f == 0:
+        return a
     output_picture, input_l, output_l, mask = face_swap(a, b)
+    if f == 1:
+        return output_picture
     return morph_picture(a, input_l, output_picture, output_l, mask, f)
