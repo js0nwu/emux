@@ -189,7 +189,7 @@ def draw_convex_hull(picture, points, color):
 
 
 def generate_mask(picture, points, grouped=True):
-    mask = numpy.zeros(picture.shape[:2], dtype=numpy.float64)
+    mask = numpy.zeros(picture.shape[:2], dtype=numpy.float)
     if grouped:
         for group in OVERLAY_POINTS:
             draw_convex_hull(mask, points[group], 1)
@@ -232,7 +232,7 @@ def color_correct(a, b, la):
 
     b_blur += ((b_blur <= 1.0) * 128).astype(b_blur.dtype)
 
-    return numpy.clip((b.astype(numpy.float64) * a_blur.astype(numpy.float64) / b_blur.astype(numpy.float64)), 0, 255)
+    return numpy.clip((b.astype(numpy.float) * a_blur.astype(numpy.float) / b_blur.astype(numpy.float)), 0, 255)
 
 def face_distance(mat_picture, mat_replace):
     p_gray = cv2.cvtColor(mat_picture, cv2.COLOR_BGR2GRAY)
