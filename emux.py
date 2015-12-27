@@ -8,8 +8,8 @@ import syncer
 import numpy
 from multiprocessing import Pool
 
-VIDEO_A = "scared.mp4"
-VIDEO_B = "neutral.mp4"
+VIDEO_A = "scaredsmall.mp4"
+VIDEO_B = "neutralsmall.mp4"
 
 OUTPUT_FPS = 10
 
@@ -50,4 +50,4 @@ b_audio = synced_b.audio
 make_frame = lambda t: (1 - get_factor(t)) * a_audio.get_frame(t) + get_factor(t) * b_audio.get_frame(t)
 audios = AudioClip(make_frame, duration = a_audio.duration)
 images = images.set_audio(audios)
-images.to_videofile("glorious.mp4")
+images.to_videofile("glorious2.mp4")

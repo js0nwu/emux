@@ -277,7 +277,7 @@ def projection_points(l):
     return numpy.float32([l[36], l[45], l[55], l[59]])
 
 
-def warp_picture_landmarks(a, la, b, lb, f, perspective=False):
+def warp_picture_landmarks(a, la, b, lb, f, perspective=True):
     ldiff = lb - la
     ldiff *= f
     src = la

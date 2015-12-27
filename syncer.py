@@ -18,6 +18,7 @@ PATH_STEPS = [1 / 2, 1, 2 / 1]
 
 FRAME_LENGTH = 0.5
 
+
 def mfcc_distance(r1, s1, r2, s2):
     if s1.size == 0 or s2.size == 0:
         return 0
@@ -25,6 +26,7 @@ def mfcc_distance(r1, s1, r2, s2):
     b = numpy.sum(rf.mfcc(s2, r2), axis=1)
     c = b - a
     return numpy.sqrt(c.dot(c))
+
 
 def extract_frame(r, s, t, l=FRAME_LENGTH):
     index_start = r * t
@@ -48,6 +50,7 @@ def get_cost(t1, t2, av, bv, ar, aa, br, ba, landmarks=False):
     else:
         return cost2(t1, t2, ar, aa, br, ba)
 
+
 def sync_clips(a, b):
     a_audio = blender.stereo_to_mono(a.audio.to_soundarray())
     a_r = a.audio.fps
@@ -61,7 +64,7 @@ def sync_clips(a, b):
     visited = []
     spath = None
     scost = 0
-    while pq.empty() == False:
+    while not pq.empty():
         sc, sa, sb, sp = pq.get()
         # pruning heuristic for min time left on sa and visited?
         stepsleft = (a.duration - sa) / FRAME_LENGTH
@@ -80,7 +83,7 @@ def sync_clips(a, b):
             if nbt >= b.duration:
                 continue
             if nat >= a.duration:
-                if spath == None or sc < scost:
+                if spath is None or sc < scost:
                     spath = sp + [nw]
                     scost = sc
             ncost = get_cost(nat, nbt, a, b, a_r, a_audio, b_r, b_audio)
