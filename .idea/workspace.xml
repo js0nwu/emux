@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="rename file" />
+    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="trying to use multiprocessing pool now">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emux.py" afterPath="$PROJECT_DIR$/emux.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syncer.py" afterPath="$PROJECT_DIR$/syncer.py" />
+    </list>
     <ignored path="emopillow.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="syncer.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="syncer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/syncer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.44226044">
+              <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -41,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="emux.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="emux.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/emux.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.43734643">
-              <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -74,9 +78,10 @@
         <option value="$PROJECT_DIR$/../paulstretch_python/paulstretch_mono.py" />
         <option value="$PROJECT_DIR$/../image-piecewise-affine/warp.py" />
         <option value="$PROJECT_DIR$/ipa/warper.py" />
-        <option value="$PROJECT_DIR$/syncer.py" />
         <option value="$PROJECT_DIR$/emopillow.py" />
         <option value="$PROJECT_DIR$/blender.py" />
+        <option value="$PROJECT_DIR$/emux.py" />
+        <option value="$PROJECT_DIR$/syncer.py" />
       </list>
     </option>
   </component>
@@ -190,7 +195,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="emopillow" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emopillow.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emux.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -355,12 +360,6 @@
       <created>1450569864892</created>
       <option name="number" value="Default" />
       <updated>1450569864892</updated>
-    </task>
-    <task id="LOCAL-00017" summary="need to fix audio cost. also fixed euclidian distance calculation">
-      <created>1450859702346</created>
-      <option name="number" value="00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1450859702346</updated>
     </task>
     <task id="LOCAL-00018" summary="badly implemented dijkstra's algorithm - no wonder i got a B in CS 1332">
       <created>1450875454924</created>
@@ -650,7 +649,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451186738582</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="trying to use multiprocessing pool now">
+      <created>1451188768092</created>
+      <option name="number" value="00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1451188768092</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -709,7 +714,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="dijkstra's - implemented correctly this time" />
     <MESSAGE value="remove some unused imports" />
     <MESSAGE value="hopefully finally got dijkstra's right this time" />
     <MESSAGE value="remove some unneeded calculations" />
@@ -734,7 +738,8 @@
     <MESSAGE value="premature optimization is the root of all evil - may need to run detect faces again after procrustes alignment" />
     <MESSAGE value="remove testing code" />
     <MESSAGE value="rename file" />
-    <option name="LAST_COMMIT_MESSAGE" value="rename file" />
+    <MESSAGE value="trying to use multiprocessing pool now" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying to use multiprocessing pool now" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -952,14 +957,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/syncer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/blender.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.9629629">
@@ -970,11 +967,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/emux.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.43734643">
-          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/syncer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44226044">
+          <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>

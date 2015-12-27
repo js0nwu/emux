@@ -42,7 +42,7 @@ def process_frame_helper(args):
 pool = Pool(processes=4)
 poolargs = [(t, a.get_frame(t), synced_b.get_frame(t), get_factor(t)) for t in numpy.arange(0, a.duration, tstep)]
 poolout = pool.map(process_frame_helper, poolargs)
-print(poolout)
+print([p[0] for p in poolout])
 exit(0)
 images = ImageSequenceClip(poolout, fps=OUTPUT_FPS)
 a_audio = a.audio
