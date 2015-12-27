@@ -8,6 +8,17 @@ from moviepy.audio.AudioClip import *
 
 import syncer
 
+PICTURE = "obama.jpg"
+REPLACE = "obama2.jpg"
+
+a = cv2.imread(PICTURE)
+b = cv2.imread(REPLACE)
+
+c = blender.generate_midframe(a, b, 0.5)
+
+cv2.imwrite("obama3.jpg", c)
+exit(0)
+
 VIDEO_A = "angry.mp4"
 VIDEO_B = "sad.mp4"
 
@@ -20,8 +31,6 @@ synced_b = syncer.sync_clips(a, b)
 
 print("done syncing")
 
-exit(0)
-
 synced_b.to_videofile("happysync2.mp4")
 
 time = 0
@@ -32,28 +41,6 @@ frames = []
 
 def get_factor(t):
     return 0.8
-
-
-def generate_audio(a, b, d):
-    t = 0
-    track = []
-    while t < d:
-        a_seg = a.subclip(t, min(d, t + tstep))
-        b_seg = b.subclip(t, min(d, t + tstep))
-        seg = CompositeAudioClip([a_seg.volumex(1 - get_factor(t)), b_seg.volumex(get_factor(t))])
-        track.append(seg)
-        t += tstep
-    return concatenate_audioclips(track)
-
-def mix_audio_frame(a, b, factor):
-    if factor == 0:
-        return a
-    if factor == 1.0:
-        return b
-    if a.shape != b.shape:
-        return a
-    return (1.0 - factor) * a + factor * b
-
 
 def process_frame(a, b, factor):
     frame_a = cv2.cvtColor(a, cv2.COLOR_RGB2BGR)
@@ -69,7 +56,8 @@ while time < a.duration:
 images = ImageSequenceClip(frames, fps=OUTPUT_FPS)
 a_audio = a.audio
 b_audio = synced_b.audio
-audios = generate_audio(a_audio, b_audio, a.audio.duration)
-audios.to_audiofile("badaudio.wav")
+make_frame = lambda t: (1 - get_factor(t)) * a_audio.get_frame(t) + get_factor(t) * b_audio.get_frame(t)
+audios = AudioClip(make_frame, duration=a_audio.duration)
+audios.to_audiofile("goodaudio.wav")
 images = images.set_audio(audios)
 images.to_videofile("glorious.mp4")

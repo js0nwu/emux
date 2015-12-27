@@ -276,7 +276,7 @@ def projection_points(l):
     # return numpy.float32([numpy.mean(l[LEFT_BROW_POINTS], axis = 0), numpy.mean(l[RIGHT_BROW_POINTS], axis = 0), numpy.mean(l[LEFT_EYE_POINTS], axis = 0), numpy.mean(l[RIGHT_EYE_POINTS], axis = 0)])
 
 
-def warp_picture_landmarks(a, la, b, lb, f, perspective=False):
+def warp_picture_landmarks(a, la, b, lb, f, perspective=True):
     ldiff = lb - la
     ldiff *= f
     src = la
@@ -290,10 +290,9 @@ def warp_picture_landmarks(a, la, b, lb, f, perspective=False):
 def morph_picture(a, la, b, lb, mask, f, warp=True):
     if not warp:
         return linear_blend(a, b, f)
-    # warped_a = warp_picture_landmarks(a, la, b, lb, f)
-    # warped_b = warp_picture_landmarks(b, lb, a, la, (1.0 - f))
-    # return linear_blend(linear_blend_mask(a, warped_a, mask), linear_blend_mask(a, warped_b, mask), f)
-    return linear_blend(a, linear_blend_mask(a, warp_picture_landmarks(a, la, b, lb, f), mask), f)
+    warped_a = warp_picture_landmarks(a, la, b, lb, f)
+    warped_b = warp_picture_landmarks(b, lb, a, la, (1.0 - f))
+    return linear_blend(linear_blend_mask(a, warped_a, mask), linear_blend_mask(a, warped_b, mask), f)
 
 
 def generate_midframe(a, b, f):
