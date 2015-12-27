@@ -1,8 +1,6 @@
 import blender
 import cv2
 
-import numpy
-
 from moviepy.editor import *
 from moviepy.audio.AudioClip import *
 
@@ -15,6 +13,8 @@ a = cv2.imread(PICTURE)
 b = cv2.imread(REPLACE)
 
 c = blender.generate_midframe(a, b, 0.5)
+
+blender.cv_display_image("c", c)
 
 cv2.imwrite("obama3.jpg", c)
 exit(0)
