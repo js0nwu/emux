@@ -5,6 +5,8 @@ from moviepy.editor import *
 from moviepy.audio.AudioClip import *
 
 import syncer
+import numpy
+from multiprocessing import Pool, Queue
 
 VIDEO_A = "angry.mp4"
 VIDEO_B = "sad.mp4"
@@ -21,24 +23,28 @@ print("done syncing")
 time = 0
 tstep = 1 / OUTPUT_FPS
 
-frames = []
-
-
 def get_factor(t):
     return 0.8
 
-def process_frame(a, b, factor):
+
+def process_frame(framenum, a, b, factor):
+    print("frame at " + str(framenum))
     frame_a = cv2.cvtColor(a, cv2.COLOR_RGB2BGR)
     frame_b = cv2.cvtColor(b, cv2.COLOR_RGB2BGR)
     frame_c = cv2.cvtColor(blender.generate_midframe(frame_a, frame_b, factor), cv2.COLOR_BGR2RGB)
-    frames.append(frame_c)
+    return (framenum, frame_c)
 
-while time < a.duration:
-    print("frame at " + str(time))
-    process_frame(a.get_frame(time), synced_b.get_frame(time), get_factor(time))
-    time += tstep
 
-images = ImageSequenceClip(frames, fps=OUTPUT_FPS)
+def process_frame_helper(args):
+    return process_frame(*args)
+
+
+pool = Pool(processes=4)
+poolargs = [(t, a.get_frame(t), synced_b.get_frame(t), get_factor(t)) for t in numpy.arange(0, a.duration, tstep)]
+poolout = pool.map(process_frame_helper, poolargs)
+print(poolout)
+exit(0)
+images = ImageSequenceClip(poolout, fps=OUTPUT_FPS)
 a_audio = a.audio
 b_audio = synced_b.audio
 make_frame = lambda t: (1 - get_factor(t)) * a_audio.get_frame(t) + get_factor(t) * b_audio.get_frame(t)
