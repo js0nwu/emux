@@ -218,7 +218,9 @@ def combine_masks(a, b):
 
 
 def generate_combined_mask(a, la, b, lb):
-    return combine_masks(generate_mask(a, la), feather_image(generate_mask(b, lb), FEATHER_AMOUNT))
+    a_mask = generate_mask(a, la)
+    b_mask = feather_image(generate_mask(b, lb), FEATHER_AMOUNT)
+    return combine_masks(a_mask, b_mask)
 
 
 def color_correct(a, b, la):
@@ -265,7 +267,7 @@ def face_swap(mat_picture, mat_replace, poisson = False):
     r_landmarks = get_landmarks(mat_replace, r, face_predictor)
     transform = procrustes(f_landmarks, r_landmarks)
     mat_replace = warp_picture(mat_replace, transform, mat_picture.shape)
-    r_landmarks = get_landmarks(mat_replace, r, face_predictor)
+    r_landmarks = get_landmarks(mat_replace, f, face_predictor)
     mask = generate_combined_mask(mat_picture, f_landmarks, mat_replace, r_landmarks)
     return (linear_blend_mask(mat_picture, color_correct(mat_picture, mat_replace, f_landmarks), mask), f_landmarks,
             r_landmarks, mask)
@@ -297,7 +299,6 @@ def generate_midframe(a, b, f):
     if f == 0:
         return a
     output_picture, input_l, output_l, mask = face_swap(a, b)
-    cv_display_image("output_picture", output_picture)
     if f == 1:
         return output_picture
     return morph_picture(a, input_l, output_picture, output_l, mask, f)
