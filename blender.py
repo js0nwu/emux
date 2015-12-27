@@ -273,8 +273,6 @@ def face_swap(mat_picture, mat_replace, poisson = False):
 
 def projection_points(l):
     return numpy.float32([l[36], l[45], l[55], l[59]])
-    # return numpy.float32([numpy.mean(l[LEFT_BROW_POINTS], axis = 0), numpy.mean(l[RIGHT_BROW_POINTS], axis = 0), numpy.mean(l[LEFT_EYE_POINTS], axis = 0), numpy.mean(l[RIGHT_EYE_POINTS], axis = 0)])
-
 
 def warp_picture_landmarks(a, la, b, lb, f, perspective=True):
     ldiff = lb - la
@@ -299,6 +297,7 @@ def generate_midframe(a, b, f):
     if f == 0:
         return a
     output_picture, input_l, output_l, mask = face_swap(a, b)
+    cv_display_image("output_picture", output_picture)
     if f == 1:
         return output_picture
     return morph_picture(a, input_l, output_picture, output_l, mask, f)
