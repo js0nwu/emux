@@ -6,10 +6,10 @@ from moviepy.audio.AudioClip import *
 
 import syncer
 import numpy
-from multiprocessing import Pool, Queue
+from multiprocessing import Pool
 
-VIDEO_A = "angry.mp4"
-VIDEO_B = "sad.mp4"
+VIDEO_A = "scared.mp4"
+VIDEO_B = "neutral.mp4"
 
 OUTPUT_FPS = 10
 
@@ -39,7 +39,7 @@ def process_frame_helper(args):
     return process_frame(*args)
 
 
-pool = Pool(processes=4)
+pool = Pool(processes=8)
 poolargs = [(t, a.get_frame(t), synced_b.get_frame(t), get_factor(t)) for t in numpy.arange(0, a.duration, tstep)]
 poolout = pool.map(process_frame_helper, poolargs)
 print([p[0] for p in poolout])

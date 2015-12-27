@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="trying to use multiprocessing pool now">
+    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="corrected dijkstra's again?">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cannabalize.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blender.py" afterPath="$PROJECT_DIR$/blender.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/emux.py" afterPath="$PROJECT_DIR$/emux.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syncer.py" afterPath="$PROJECT_DIR$/syncer.py" />
     </list>
     <ignored path="emopillow.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,12 +26,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="syncer.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="syncer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/syncer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44226044">
-              <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="44" column="60" selection-start-line="44" selection-start-column="60" selection-end-line="44" selection-end-column="60" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cannabalize.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cannabalize.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -38,18 +51,18 @@
       <file leaf-file-name="blender.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blender.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.9629629">
-              <caret line="266" column="53" selection-start-line="266" selection-start-column="53" selection-end-line="266" selection-end-column="53" />
+            <state vertical-scroll-proportion="-23.333334">
+              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="emux.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="emux.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/emux.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.26289925">
+              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -80,14 +93,15 @@
         <option value="$PROJECT_DIR$/ipa/warper.py" />
         <option value="$PROJECT_DIR$/emopillow.py" />
         <option value="$PROJECT_DIR$/blender.py" />
-        <option value="$PROJECT_DIR$/emux.py" />
         <option value="$PROJECT_DIR$/syncer.py" />
+        <option value="$PROJECT_DIR$/cannabalize.py" />
+        <option value="$PROJECT_DIR$/emux.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1280" />
+    <option name="width" value="719" />
     <option name="height" value="710" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -360,12 +374,6 @@
       <created>1450569864892</created>
       <option name="number" value="Default" />
       <updated>1450569864892</updated>
-    </task>
-    <task id="LOCAL-00018" summary="badly implemented dijkstra's algorithm - no wonder i got a B in CS 1332">
-      <created>1450875454924</created>
-      <option name="number" value="00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1450875454924</updated>
     </task>
     <task id="LOCAL-00019" summary="fixes and notes to self">
       <created>1450875936748</created>
@@ -655,14 +663,20 @@
       <option name="project" value="LOCAL" />
       <updated>1451188768092</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="corrected dijkstra's again?">
+      <created>1451249750004</created>
+      <option name="number" value="00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1451249750004</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="710" extended-state="0" />
+    <frame x="0" y="23" width="719" height="710" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21523437" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38247567" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35958394" sideWeight="0.5015625" order="7" side_tool="true" content_ui="tabs" />
@@ -714,7 +728,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove some unused imports" />
     <MESSAGE value="hopefully finally got dijkstra's right this time" />
     <MESSAGE value="remove some unneeded calculations" />
     <MESSAGE value="get rid of ugly sound file hack" />
@@ -739,7 +752,8 @@
     <MESSAGE value="remove testing code" />
     <MESSAGE value="rename file" />
     <MESSAGE value="trying to use multiprocessing pool now" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying to use multiprocessing pool now" />
+    <MESSAGE value="corrected dijkstra's again?" />
+    <option name="LAST_COMMIT_MESSAGE" value="corrected dijkstra's again?" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -959,27 +973,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/blender.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9629629">
-          <caret line="266" column="53" selection-start-line="266" selection-start-column="53" selection-end-line="266" selection-end-column="53" />
+        <state vertical-scroll-proportion="-23.333334">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emux.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/syncer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44226044">
-          <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="60" selection-start-line="44" selection-start-column="60" selection-end-line="44" selection-end-column="60" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cannabalize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emux.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26289925">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

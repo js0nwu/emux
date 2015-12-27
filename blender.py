@@ -42,7 +42,7 @@ face_detector_haar = cv2.CascadeClassifier(FACE_CASCADE_PATH)
 face_predictor = dlib.shape_predictor(FACE_PREDICTOR_PATH)
 
 
-def find_faces(picture, hog=True):
+def find_faces(picture, hog=False):
     if hog:
         return find_objects_hog(picture, face_detector_hog)
     else:
