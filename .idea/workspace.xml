@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="remove testing code">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/emopillow.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blender.py" afterPath="$PROJECT_DIR$/blender.py" />
-    </list>
+    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="rename file" />
     <ignored path="emopillow.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,7 +44,7 @@
       <file leaf-file-name="emux.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/emux.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5159705">
+            <state vertical-scroll-proportion="-0.43734643">
               <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -360,12 +356,6 @@
       <option name="number" value="Default" />
       <updated>1450569864892</updated>
     </task>
-    <task id="LOCAL-00016" summary="use lowest cost path finding and implemented cost for facial landmarks">
-      <created>1450858986900</created>
-      <option name="number" value="00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1450858986900</updated>
-    </task>
     <task id="LOCAL-00017" summary="need to fix audio cost. also fixed euclidian distance calculation">
       <created>1450859702346</created>
       <option name="number" value="00017" />
@@ -654,7 +644,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451185318137</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="rename file">
+      <created>1451186738582</created>
+      <option name="number" value="00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1451186738582</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -713,7 +709,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="made multithreaded - not sure if it is faster" />
     <MESSAGE value="dijkstra's - implemented correctly this time" />
     <MESSAGE value="remove some unused imports" />
     <MESSAGE value="hopefully finally got dijkstra's right this time" />
@@ -738,7 +733,8 @@
     <MESSAGE value="make float64 float" />
     <MESSAGE value="premature optimization is the root of all evil - may need to run detect faces again after procrustes alignment" />
     <MESSAGE value="remove testing code" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove testing code" />
+    <MESSAGE value="rename file" />
+    <option name="LAST_COMMIT_MESSAGE" value="rename file" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -974,7 +970,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/emux.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5159705">
+        <state vertical-scroll-proportion="-0.43734643">
           <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
