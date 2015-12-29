@@ -14,7 +14,7 @@ import scipy.io.wavfile as wav
 import librosa.effects as re
 import librosa.feature as rf
 
-PATH_STEPS = [1 / 2, 1, 2 / 1]
+PATH_STEPS = [1 / 2, 1, 2]
 
 FRAME_LENGTH = 0.5
 

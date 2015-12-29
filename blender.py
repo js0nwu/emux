@@ -260,24 +260,29 @@ def face_swap(mat_picture, mat_replace, poisson = False):
     p_gray = cv2.cvtColor(mat_picture, cv2.COLOR_BGR2GRAY)
     r_gray = cv2.cvtColor(mat_replace, cv2.COLOR_BGR2GRAY)
     f_faces = find_faces(p_gray, HOG_DETECT)
+    if len(f_faces) == 0:
+        return (False, 0, 0, 0, 0)
     f = f_faces[0]
     f_landmarks = get_landmarks(mat_picture, f, face_predictor)
     r_faces = find_faces(r_gray, HOG_DETECT)
+    if len(r_faces) == 0:
+        return (False, 0, 0, 0, 0)
     r = r_faces[0]
     r_landmarks = get_landmarks(mat_replace, r, face_predictor)
     transform = procrustes(f_landmarks, r_landmarks)
     mat_replace = warp_picture(mat_replace, transform, mat_picture.shape)
     r_landmarks = get_landmarks(mat_replace, f, face_predictor)
     mask = generate_combined_mask(mat_picture, f_landmarks, mat_replace, r_landmarks)
-    return (linear_blend_mask(mat_picture, color_correct(mat_picture, mat_replace, f_landmarks), mask), f_landmarks,
-            r_landmarks, mask)
+    return (
+    True, linear_blend_mask(mat_picture, color_correct(mat_picture, mat_replace, f_landmarks), mask), f_landmarks,
+    r_landmarks, mask)
 
 
 def projection_points(l):
     return numpy.float32([l[36], l[45], l[55], l[59]])
 
 
-def warp_picture_landmarks(a, la, b, lb, f, perspective=True):
+def warp_picture_landmarks(a, la, b, lb, f, perspective=False):
     ldiff = lb - la
     ldiff *= f
     src = la
@@ -299,7 +304,9 @@ def morph_picture(a, la, b, lb, mask, f, warp=True):
 def generate_midframe(a, b, f):
     if f == 0:
         return a
-    output_picture, input_l, output_l, mask = face_swap(a, b)
+    success, output_picture, input_l, output_l, mask = face_swap(a, b)
+    if not success:
+        return a
     if f == 1:
         return output_picture
     return morph_picture(a, input_l, output_picture, output_l, mask, f)
