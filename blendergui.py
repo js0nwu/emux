@@ -12,14 +12,13 @@ class BlenderGUI(QDialog):
         super(BlenderGUI, self).__init__(parent)
         self.a = cv2.imread("picture.jpg")
         self.b = cv2.imread("replace.jpg")
-        self.factor = 0
-        self.result = self.a
-        height, width, byteValue = self.result.shape
-        byteValue = byteValue * width
-
+        self.factor = 1
+        self.result = blender.generate_midframe(self.a, self.b, self.factor);
+        height, width, depth = self.result.shape
+        depth = depth * width
         self.result = cv2.cvtColor(self.result, cv2.COLOR_BGR2RGB)
 
-        self.mQImage = QImage(self.result, width, height, byteValue, QImage.Format_RGB888)
+        self.mQImage = QImage(self.result, width, height, depth, QImage.Format_RGB888)
 
     def paintEvent(self, QPaintEvent):
         painter = QPainter()
@@ -30,17 +29,17 @@ class BlenderGUI(QDialog):
     def keyPressEvent(self, QKeyEvent):
         super(BlenderGUI, self).keyPressEvent(QKeyEvent)
         if 'w' == QKeyEvent.text():
-            self.factor += 0.1
+            self.factor += 0.2
             self.factor = numpy.clip(self.factor, 0, 1)
             self.result = cv2.cvtColor(blender.generate_midframe(self.a, self.b, self.factor), cv2.COLOR_BGR2RGB)
-            height, width, byteValue = self.result.shape
-            self.mQImage = QImage(self.result, width, height, byteValue, QImage.Format_RGB888)
+            height, width, depth = self.result.shape
+            self.mQImage = QImage(self.result, width, height, depth, QImage.Format_RGB888)
         elif 'q' == QKeyEvent.text():
-            self.factor -= 0.1
+            self.factor -= 0.2
             self.factor = numpy.clip(self.factor, 0, 1)
             self.result = cv2.cvtColor(blender.generate_midframe(self.a, self.b, self.factor), cv2.COLOR_BGR2RGB)
-            height, width, byteValue = self.result.shape
-            self.mQImage = QImage(self.result, width, height, byteValue, QImage.Format_RGB888)
+            height, width, depth = self.result.shape
+            self.mQImage = QImage(self.result, width, height, depth, QImage.Format_RGB888)
         else:
             app.exit(1)
 
