@@ -52,9 +52,9 @@ def warp_process(inIm, inArr,
             homogCoord[0] = i
             homogCoord[1] = j
 
-            # Determine which tesselation triangle contains each pixel in the shape norm image
-            if i < 0 or i >= outArr.shape[1]: continue
-            if j < 0 or j >= outArr.shape[0]: continue
+            # Determine which tessellation triangle contains each pixel in the shape norm image
+            if i < 0 or i >= outArr.shape[1] or i >= inTriangle.shape[0]: continue
+            if j < 0 or j >= outArr.shape[0] or j >= inTriangle.shape[1]: continue
 
             # Determine which triangle the destination pixel occupies
             tri = inTriangle[i, j]
