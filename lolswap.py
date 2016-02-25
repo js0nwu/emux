@@ -15,6 +15,6 @@ b = cv2.imread(replace_path)
 for i in range(1, num + 1):
     c = blender.generate_midframe(a, b, float(i) / float(num))
     cv2.imwrite(OUTPUT_PREFIX + str(i) + OUTPUT_EXTENSION, c)
-    print("processed " + str(i + 1))
+    print("processed " + str(i))
 
 print("done!")
