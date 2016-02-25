@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="make quitting only one button">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lolswap.py" />
+    <list default="true" id="ba64b0ea-2fd6-4202-ba03-551a30106b14" name="Default" comment="create lolswap script">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blendergui.py" afterPath="$PROJECT_DIR$/blendergui.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lolswap.py" afterPath="$PROJECT_DIR$/lolswap.py" />
     </list>
     <ignored path="emopillow.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -76,8 +75,8 @@
       <file leaf-file-name="lolswap.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lolswap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35533553">
-              <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.2618262">
+              <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -426,12 +425,6 @@
       <option name="number" value="Default" />
       <updated>1450569864892</updated>
     </task>
-    <task id="LOCAL-00023" summary="fixed incorrect python import statement">
-      <created>1450907166625</created>
-      <option name="number" value="00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1450907166625</updated>
-    </task>
     <task id="LOCAL-00024" summary="use PQ for paths and handle remainder in initial path tree">
       <created>1450908066800</created>
       <option name="number" value="00024" />
@@ -720,7 +713,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456366347679</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="create lolswap script">
+      <created>1456367589001</created>
+      <option name="number" value="00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1456367589001</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -779,7 +778,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="trying to export to a video instead of a bunch of frames" />
     <MESSAGE value="the audio for both videos have to have the same channels in order to be synced" />
     <MESSAGE value="import utility in syncer again" />
     <MESSAGE value="TIL lists are thread safe in python" />
@@ -804,7 +802,8 @@
     <MESSAGE value="use poolmap output" />
     <MESSAGE value="fix some IDE suggestions" />
     <MESSAGE value="make quitting only one button" />
-    <option name="LAST_COMMIT_MESSAGE" value="make quitting only one button" />
+    <MESSAGE value="create lolswap script" />
+    <option name="LAST_COMMIT_MESSAGE" value="create lolswap script" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1234,8 +1233,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lolswap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35533553">
-          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.2618262">
+          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
