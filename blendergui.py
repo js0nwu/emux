@@ -34,13 +34,13 @@ class BlenderGUI(QDialog):
             self.result = cv2.cvtColor(blender.generate_midframe(self.a, self.b, self.factor), cv2.COLOR_BGR2RGB)
             height, width, depth = self.result.shape
             self.mQImage = QImage(self.result, width, height, depth, QImage.Format_RGB888)
-        elif 'q' == QKeyEvent.text():
+        elif 'e' == QKeyEvent.text():
             self.factor -= 0.2
             self.factor = numpy.clip(self.factor, 0, 1)
             self.result = cv2.cvtColor(blender.generate_midframe(self.a, self.b, self.factor), cv2.COLOR_BGR2RGB)
             height, width, depth = self.result.shape
             self.mQImage = QImage(self.result, width, height, depth, QImage.Format_RGB888)
-        else:
+        elif 'q' == QKeyEvent.text():
             app.exit(1)
 
 
