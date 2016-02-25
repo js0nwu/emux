@@ -17,7 +17,6 @@ class BlenderGUI(QDialog):
         height, width, depth = self.result.shape
         depth = depth * width
         self.result = cv2.cvtColor(self.result, cv2.COLOR_BGR2RGB)
-
         self.mQImage = QImage(self.result, width, height, depth, QImage.Format_RGB888)
 
     def paintEvent(self, QPaintEvent):
