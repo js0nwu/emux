@@ -7,7 +7,7 @@ from moviepy.editor import *
 OUTPUT_PREFIX = "out_"
 OUTPUT_EXTENSION = ".jpg"
 
-FPS = 10
+FPS = 3
 
 picture_path = sys.argv[1]
 replace_path = sys.argv[2]
